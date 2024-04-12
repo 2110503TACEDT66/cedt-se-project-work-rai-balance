@@ -1,5 +1,7 @@
 const Reservation = require("../models/Reservation");
 const User = require("../models/User");
+
+const Point = require("../models/Point")
 const { options } = require("../routes/coworkings");
 
 //desc    Register user
@@ -36,6 +38,7 @@ exports.register = async (req, res, next) => {
     console.log(err.stack);
   }
 };
+
 //desc    Login user
 //route   POST /api/project/auth/login
 //access  Public
@@ -236,7 +239,6 @@ exports.deleteMe = async (req, res, next) => {
     res.status(400).json({ success: false });
   }
 };
-
 //@desc         Update account user
 //@routes       PUT /api/project/auth/update
 //@access       Private

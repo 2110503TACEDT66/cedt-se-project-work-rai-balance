@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema(
         "Please add a valid email",
       ],
     },
+    currentPoint: {
+      type: Number,
+      default: 0,
+    },
     role: {
       type: String,
       enum: ["user", "admin"],
