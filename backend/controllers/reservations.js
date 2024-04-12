@@ -83,6 +83,8 @@ exports.addReservation = async (req, res, next) => {
 
     const coworking = await Coworking.findById(req.params.coworkingId);
 
+   
+
     if (!coworking) {
       return res.status(404).json({
         success: false,
@@ -94,15 +96,15 @@ exports.addReservation = async (req, res, next) => {
     req.body.user = req.user.id;
 
     //Check for existed appointment
-    const existedReservations = await Reservation.find({ user: req.user.id });
+    // const existedReservations = await Reservation.find({ user: req.user.id });
 
     //If the user is not an admin, they can only create 3 appointment
-    if (existedReservations.length >= 3 && req.user.role !== "admin") {
-      return res.status(400).json({
-        success: false,
-        message: `The user with ID ${req.user.id} has already made 3 appointments`,
-      });
-    }
+    // if (existedReservations.length >= 3 && req.user.role !== "admin") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `The user with ID ${req.user.id} has already made 3 appointments`,
+    //   });
+    // }
 
     //const start = req.body.apptDate.split('T')[1].split('.')[0];
     if (
@@ -121,8 +123,20 @@ exports.addReservation = async (req, res, next) => {
         message: `Please make valid reservation`,
       });
     }
-
     const reservation = await Reservation.create(req.body);
+
+    const user = await User.findById(req.user.id);
+
+    console.log(user.currentPoint)
+
+    const point = await Point.create({user,10:Number,"-1":String})
+
+    const user1 = await User.findByIdAndUpdate(user.id, {currentPoint:user.currentPoint-1}, {
+      new: true,
+      runValidators: true,
+    });
+
+    
     res.status(201).json({
       success: true,
       data: reservation,
@@ -135,6 +149,7 @@ exports.addReservation = async (req, res, next) => {
     });
   }
 };
+
 
 //desc    Update reservation
 //route   PUT /api/project/reservations/:Id

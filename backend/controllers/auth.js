@@ -12,13 +12,30 @@ exports.register = async (req, res, next) => {
     // Create user
     const user = await User.create({ name, email, telephone, password, role });
 
+    const newCurrent = user.currentPoint;
+    const newCurrent1 = newCurrent+2;
+    console.log(newCurrent1)
+
+    const user1 = await User.findByIdAndUpdate(user.id, {currentPoint:user.currentPoint+2}, {
+      new: true,
+      runValidators: true,
+    });
+
+    const pointCreate = await Point.create({user,"+2":String});
+
+
+    // Point.addTwoPoint(user);
+    
+    // const point = Point.addTwoPoint(user)
+
+    // const point = await Point.create({user,"2":Number,"+2":String});
+
     sendTokenResponse(user, 201, res);
   } catch (err) {
     res.status(400).json({ success: false });
     console.log(err.stack);
   }
 };
-
 //desc    Login user
 //route   POST /api/project/auth/login
 //access  Public
@@ -86,6 +103,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     telephone:user.telephone,
     email: user.email,
     role:user.role,
+    currentPoint:user.currentPoint,
     token,
   });
 };
