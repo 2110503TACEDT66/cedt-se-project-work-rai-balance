@@ -94,6 +94,7 @@ connectDB();
 const coworkings = require("./routes/coworkings");
 const auth = require("./routes/auth");
 const reservations = require("./routes/reservations");
+const points = require("./routes/points");
 
 const app=express();
 
@@ -148,6 +149,7 @@ app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs));
 app.use("/api/project/coworkings", coworkings);
 app.use("/api/project/auth", auth);
 app.use("/api/project/reservations", reservations);
+app.use("/api/project/points", points);
 
 
 const server = app.listen(PORT,console.log('Server running in ',process.env.NODE_ENV,'on '+ process.env.HOST +':' + PORT));

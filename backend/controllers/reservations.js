@@ -1,5 +1,7 @@
 const Coworking = require("../models/Coworking");
+const Point = require("../models/Point");
 const Reservation = require("../models/Reservation");
+const User = require("../models/User");
 
 //desc    Get All reservations
 //route   Get /api/project/reservations
@@ -78,6 +80,7 @@ exports.getReservation = async (req, res, next) => {
 //route   POST /api/project/:coworkingId/reservations
 //access  Private
 exports.addReservation = async (req, res, next) => {
+  
   try {
     req.body.coworking = req.params.coworkingId;
 
@@ -94,15 +97,15 @@ exports.addReservation = async (req, res, next) => {
     req.body.user = req.user.id;
 
     //Check for existed appointment
-    const existedReservations = await Reservation.find({ user: req.user.id });
+    // const existedReservations = await Reservation.find({ user: req.user.id });
 
     //If the user is not an admin, they can only create 3 appointment
-    if (existedReservations.length >= 3 && req.user.role !== "admin") {
-      return res.status(400).json({
-        success: false,
-        message: `The user with ID ${req.user.id} has already made 3 appointments`,
-      });
-    }
+    // if (existedReservations.length >= 3 && req.user.role !== "admin") {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `The user with ID ${req.user.id} has already made 3 appointments`,
+    //   });
+    // }
 
     //const start = req.body.apptDate.split('T')[1].split('.')[0];
     if (
@@ -121,6 +124,27 @@ exports.addReservation = async (req, res, next) => {
         message: `Please make valid reservation`,
       });
     }
+
+    const user = await User.findById(req.user.id);
+
+    if(user.currentPoint <= 0){
+      return res.status(400).json({
+        success: false,
+        message: `Point is not enough, cannot make reservation`,
+      });
+    }
+    
+    const point = await Point.create({
+      user: user._id,
+      updatedPoint: user.currentPoint-1,
+      change: "-1",
+      message: "Make reservation successfully"
+    })
+
+    const user1 = await User.findByIdAndUpdate(user.id, {currentPoint: point.updatedPoint}, {
+      new: true,
+      runValidators: true,
+    });
 
     const reservation = await Reservation.create(req.body);
     res.status(201).json({
@@ -224,7 +248,35 @@ exports.deleteReservation = async (req, res, next) => {
       });
     }
 
+    // const reservationStartDate = new Date(`${reservation.apptDate.split('T')[0]}T${reservation.start}`);
+    // const currentDate = Date.now();
+    // console.log(reservationStartDate);
+    const currentDate = new Date();
+    const currentTime = currentDate.toTimeString().split(' ')[0]; // Extract time part
+    console.log(currentTime);
+
+    if (reservation.apptDate <= Date.now() && reservation.start.localeCompare(currentTime) <= 0) {
+      return res.status(401).json({
+        success: false,
+        message: "Cannot delete an already due reservation",
+      });
+    }
+
     await reservation.deleteOne();
+
+    const user = await User.findById(req.user.id);
+
+    const point = await Point.create({
+      user: user._id,
+      updatedPoint: user.currentPoint + 1,
+      change: "+1",
+      message: "Delete reservation successfully"
+    });
+
+    const user1 = await User.findByIdAndUpdate(user.id, {currentPoint: point.updatedPoint}, {
+      new: true,
+      runValidators: true,
+    });
 
     res.status(200).json({
       success: true,

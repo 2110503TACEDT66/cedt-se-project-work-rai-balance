@@ -14,6 +14,10 @@ const router = express.Router();
 
 const { protect, authorize } = require("../middleware/auth");
 
+const pointRouter = require("./points");
+
+router.use("/:userId/points/", pointRouter);
+
 router.post("/register", register);
 router.post("/login", login);
 router.get("/logout", logout);
