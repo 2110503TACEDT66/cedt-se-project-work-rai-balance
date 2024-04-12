@@ -1,5 +1,7 @@
 const Coworking = require("../models/Coworking");
 const Reservation = require("../models/Reservation");
+const Point = require("../models/Point");
+const User = require("../models/User");
 
 //desc    Get All reservations
 //route   Get /api/project/reservations
@@ -126,6 +128,12 @@ exports.addReservation = async (req, res, next) => {
     const reservation = await Reservation.create(req.body);
 
     const user = await User.findById(req.user.id);
+    if(user.currentPoint <= 0){
+      return res.status(400).json({
+        success: false,
+        message: `Point not enough, Can no make reservation`,
+      });
+    }
 
     console.log(user.currentPoint)
 
@@ -149,7 +157,6 @@ exports.addReservation = async (req, res, next) => {
     });
   }
 };
-
 
 //desc    Update reservation
 //route   PUT /api/project/reservations/:Id
