@@ -23,6 +23,10 @@ const ReservationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  hasReview: {
+    type: Boolean,
+    default: false
+  },
   createAt: {
     type: Date,
     default: Date.now,
