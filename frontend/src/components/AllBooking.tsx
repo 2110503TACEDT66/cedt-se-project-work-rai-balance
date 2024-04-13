@@ -3,6 +3,7 @@ import { BookingItem2, BookingJson } from "../../interface";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import deleteBooking from "@/libs/deleteBooking";
+import Image from "next/image";
 
 export default async function AllBooking({
   bookingsJson,
@@ -22,8 +23,18 @@ export default async function AllBooking({
             className="bg-white p-5 rounded-xl drop-shadow-xl w-auto m-3"
             key={BookingItem2.createAt}
           >
-            <div className="text-[25px] font-bold">
+            <div className="text-[25px] font-bold flex flex-row justify-between">
               {BookingItem2.coworking?.name}
+              <div className="ml-5 flex flex-row">
+                <Link href={"/mybooking/edit/" + BookingItem2._id}>
+                <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                width={0} height={0} sizes='100vh'/>
+                </Link>
+                <Link href={`/mybooking/delete/${BookingItem2._id}`}>
+                <Image src={'/img/trash.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                width={0} height={0} sizes='100vh'/>
+                </Link>
+              </div>
             </div>
             <div className="text-md mt-5">
               From {BookingItem2.start} to {BookingItem2.end}
@@ -34,19 +45,13 @@ export default async function AllBooking({
             <div className="text-md mt-2">By {BookingItem2.user}</div>
             <div className="mt-5 flex justify-end">
               <div className="ml-5">
-                <Link href={"/mybooking/edit/" + BookingItem2._id}>
-                  <button className="block rounded-md bg-black hover:bg-indigo-900 px-6 py-2 text-white shadow-sm">
-                    Edit
-                  </button>
-                </Link>
-              </div>
-              <div className="ml-5">
-                <Link href={`/mybooking/delete/${BookingItem2._id}`}>
+                <Link href={`/`}>
                   <button className="block rounded-md bg-black hover:bg-indigo-900 px-6 py-2 text-white shadow-sm right-5 bottom-5">
-                    Remove
+                    Review
                   </button>
                 </Link>
               </div>
+              
             </div>
           </div>
         ))}
