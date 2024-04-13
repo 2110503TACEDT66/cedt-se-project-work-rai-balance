@@ -114,3 +114,19 @@ export interface UserJson {
   pagination: {}
   data: UserItem[]
 }
+
+export interface HistoryItem {
+  _id:string,
+  user:string,
+  updatedPoint: Number,
+  change: string,
+  message: string,
+  updatedAt: string,
+  __v: string
+}
+
+export interface HistoryJson {
+  success: boolean,
+  count: number,
+  data: HistoryItem[]
+}

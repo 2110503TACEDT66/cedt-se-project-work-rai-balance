@@ -1,4 +1,3 @@
-'use client'
 import Link from "next/link"
 import { BookingItem2, BookingJson } from "../../../interface"
 import AllBooking from "@/components/AllBooking"
@@ -8,18 +7,21 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import deleteBooking from "@/libs/deleteBooking";
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react"
+import getPointHistory from "@/libs/getPointHistory"
+import AllHistory from "@/components/AllHistory"
 
-export default  function MyBooking() {
-    const router = useRouter();
+export default async function PointHistory() {
+    // const router = useRouter();
 
-    const {data: session} = useSession()
+    // const {data: session} = useSession()
+    const session = await getServerSession(authOptions)
     if (!session || !session.user.token) return null
     
-    const bookings = getBookings(session.user.token)
+    const history = getPointHistory(session.user.token, session.user._id)
     
     return (
         <main>
-            <AllBooking bookingsJson={bookings}/>
+            <AllHistory historyJson={history}/>
         </main>
     )
 }

@@ -1,7 +1,7 @@
 // components/Navbar.tsx
 'use client'
 
-import Link from 'next/link';
+import Link from 'next/link'
 import TopMenuItem from './TopMenuItem'
 import Image from 'next/image'
 import { getServerSession } from 'next-auth'
@@ -33,7 +33,7 @@ export default function Navbar(){
           {/* Navbar title */}
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0">
-            <Image src={'/img/logo.png'} className='w-[160px] ml-5 mt-auto mb-auto' alt='logo'
+            <Image src={'/img/logo1.png'} className='w-[200px] ml-5 mt-auto mb-auto' alt='logo'
               width={0} height={0} sizes='100vh'/>
             
             </div>
@@ -62,18 +62,17 @@ export default function Navbar(){
               <div className="absolute  right-0 z-50 mt-[77px] w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Link href={'/profile'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-md" onClick={toggleMenuL}>My Profile</Link>
                 <Link href={'/mybooking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>My Bookings</Link>
+                <Link href={'/pointHistory'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Point Jaa</Link>
                 {
                   session?.user?.role=='admin'?<Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
                   :null
                 }
+                
                 <Link href={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-md" onClick={() => signOut({ callbackUrl: '/' })}>Logout</Link>
               </div>
           </div>
           ):null}
-          
-          
-          
-          
+
 
           {/* Mobile menu button */}
           <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
