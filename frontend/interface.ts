@@ -63,12 +63,13 @@ export interface User{
   email:string,
   telephone: string,
   password:string,
+  currentPoint?:number
 }
 export interface UserUpdate{
   name:string,
   email:string,
   telephone: string,
-  
+  currentPoint:number
 }
 
 export interface CoworkingItemCreate{
