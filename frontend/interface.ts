@@ -130,3 +130,9 @@ export interface HistoryJson {
   count: number,
   data: HistoryItem[]
 }
+
+export interface ReviewItem {
+  reservationId: string,
+  rating: Number,
+  comment: string
+}

@@ -10,7 +10,7 @@ export default function Coworking() {
   return (
     <main className="text-center p-5">
       <h1 className="text-xl font-medium">Select Coworking</h1>
-      <Suspense
+      {/* <Suspense
         fallback={
           <p>
             Loading...
@@ -18,8 +18,9 @@ export default function Coworking() {
           </p>
         }
       >
-        <CoworkingCatalog coworkingsJson={coworkings} />
-      </Suspense>
+        
+      </Suspense> */}
+      <CoworkingCatalog coworkingsJson={coworkings} />
     </main>
   );
 }
