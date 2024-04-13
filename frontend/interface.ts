@@ -136,3 +136,9 @@ export interface ReviewItem {
   rating: Number,
   comment: string
 }
+
+export interface ReviewItemEdit {
+  reviewId: string,
+  rating: Number,
+  comment: string
+}

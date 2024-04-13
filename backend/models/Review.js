@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { boolean } = require("webidl-conversions");
 
 const ReviewSchema = new mongoose.Schema(
    {
@@ -17,16 +18,23 @@ const ReviewSchema = new mongoose.Schema(
          ref: "User",
          required: true,
        },
+      approved: {
+        type: Boolean,
+        default: false
+      },
+      passed: {
+        type: Boolean,
+        default: false
+      },
      rating: {
        type: Number,
-       required: false,
-       default: 0,
+       default: null,
      },
      comment: {
        type: String,
-       required: false
+       default: ""
      },
-     updatedAt: {
+     createdAt: {
          type: Date,
          default: Date.now,
        },
