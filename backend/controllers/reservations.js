@@ -247,6 +247,13 @@ exports.deleteReservation = async (req, res, next) => {
         message: `User ${req.user.id} is not authorized to delete this reservation`,
       });
     }
+   
+    if(reservation.hasReview){
+      return res.status(401).json({
+        success: false,
+        message: `User ${req.user.id} can not delete this reservation because you have review`,
+      });
+    }
 
     // const reservationStartDate = new Date(`${reservation.apptDate.split('T')[0]}T${reservation.start}`);
     // const currentDate = Date.now();

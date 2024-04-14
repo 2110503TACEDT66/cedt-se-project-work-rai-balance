@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getPointHistory from "@/libs/getPointHistory"
 import AllHistory from "@/components/AllHistory"
+import ProgressBar from "@/components/Progressbar";
 
 export default async function PointHistory() {
 
@@ -12,6 +13,7 @@ export default async function PointHistory() {
     
     return (
         <main>
+            <ProgressBar value1={session.user.currentPoint}/>
             <AllHistory historyJson={history}/>
         </main>
     )

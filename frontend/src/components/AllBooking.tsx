@@ -26,16 +26,34 @@ export default async function AllBooking({
           >
             <div className="text-[25px] font-bold flex flex-row justify-between">
               {BookingItem2.coworking?.name}
-              <div className="ml-5 flex flex-row">
-                <Link href={"/mybooking/edit/" + BookingItem2._id}>
-                <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
-                width={0} height={0} sizes='100vh'/>
-                </Link>
-                <Link href={`/mybooking/delete/${BookingItem2._id}`}>
-                <Image src={'/img/trash.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
-                width={0} height={0} sizes='100vh'/>
-                </Link>
-              </div>
+              {
+                BookingItem2.hasReview?(
+                  <div className="ml-5 flex flex-row">
+                    <div className="text-sm font-light text-slate-400">
+                      can not edit or delete
+                    </div>
+                    
+                  </div>
+                  // <div className="ml-5 flex flex-row">
+                  //   <Link href={"/mybooking/edit/" + BookingItem2._id}>
+                  //   <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                  //     width={0} height={0} sizes='100vh'/>
+                  //   </Link>
+                  // </div>
+                ):(<div className="ml-5 flex flex-row">
+                    <Link href={"/mybooking/edit/" + BookingItem2._id}>
+                    <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                      width={0} height={0} sizes='100vh'/>
+                    </Link>
+                    <Link href={`/mybooking/delete/${BookingItem2._id}`}>
+                    <Image src={'/img/trash.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                    width={0} height={0} sizes='100vh'/>
+                    </Link>
+                  </div>
+                  
+                )
+              }
+              
             </div>
             <div className="text-md mt-5">
               From {BookingItem2.start} to {BookingItem2.end}

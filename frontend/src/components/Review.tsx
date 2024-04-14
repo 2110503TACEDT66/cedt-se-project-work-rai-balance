@@ -12,7 +12,7 @@ export default async function Review({
 }){
 
    const reviewjsonReady = await reviewjson;
-  console.log(reviewjson)
+   console.log(reviewjson)
    
   
 
@@ -33,7 +33,7 @@ export default async function Review({
                      readOnly
                      
             />
-               <div className="text-[25px] font-bold flex flex-row justify-between">
+               <div className="text-lg font-normal flex flex-row justify-between">
                   conmment: {reviewjsonReady.data.comment}
                   
                   
