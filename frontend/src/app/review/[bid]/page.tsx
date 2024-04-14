@@ -17,6 +17,9 @@ export default async function ReviewDetailPage({params}:{params:{bid:string}}){
    console.log(reviewDetail.data._id)
    return(
       <main>
+         <div>
+            
+         </div>
             <Review reviewjson={reviewDetail}/>
             <Link href={`/review/edit/${reviewDetail.data._id}`}><button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Edit My Review</button></Link>
         </main>

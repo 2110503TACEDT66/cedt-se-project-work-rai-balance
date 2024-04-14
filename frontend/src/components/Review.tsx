@@ -24,20 +24,25 @@ export default async function Review({
                   className="bg-white p-5 rounded-xl drop-shadow-xl w-auto m-3"
                   // key={ReviewItem2.createAt}
                >
-                  Rating: 
+                  <div className="text-lg font-bold">
+                     Rating :
+                  </div>
+                   
                   <Rating
-                
                      size="large"
                      name="rate"
                      value={(reviewjsonReady.data.rating.valueOf())}
                      readOnly
                      
             />
+
+            <div className="flex flex-row ">
+               <div className="text-lg font-bold">comment : </div>
                <div className="text-lg font-normal flex flex-row justify-between">
-                  conmment: {reviewjsonReady.data.comment}
-                  
-                  
-                  </div>
+                  {reviewjsonReady.data.comment}
+               </div>
+            </div>
+               
                </div>
 
             

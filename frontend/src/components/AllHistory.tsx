@@ -13,15 +13,28 @@ export default async function AllHistory({
     
     return(
         <>
-        <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">
+        <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-2 md:px-15 md:mx-20 lg:mx-[200px]">
         {historyJsonReady.data.map((HistoryItem: HistoryItem) => (
             <div className="bg-white p-5 rounded-xl drop-shadow-xl w-auto m-3" key={HistoryItem.updatedAt}>
               <div className="text-[25px] font-bold">
                 {HistoryItem.message}
-              </div>  
-              <div className="text-[15px] font-semibold">
-                Point {HistoryItem.change}
               </div>
+              <div>
+                
+              </div>  
+              {
+                HistoryItem.change=='-1' || HistoryItem.change == '-2' ?(
+                  <div className="text-[15px] text-red-600 font-semibold">
+                    Point {HistoryItem.change}
+                  </div>
+                ):(
+                  <div className="text-[15px] text-teal-500 font-semibold">
+                    Point {HistoryItem.change}
+                  </div>
+                )
+
+              }
+              
               
               <div className="text-[15px] font-semibold">
                 Current Point {HistoryItem.updatedPoint.toString()}

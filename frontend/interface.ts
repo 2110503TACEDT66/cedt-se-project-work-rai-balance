@@ -94,6 +94,7 @@ export interface UserItem {
   email: string
   role: string
   createdAt: string
+  currentPoint:number
   __v: 0,
   reservations: UserBookingItem[]
   id: string
@@ -166,4 +167,3 @@ export interface ReviewItemEdit {
   rating: Number,
   comment: string
 }
-

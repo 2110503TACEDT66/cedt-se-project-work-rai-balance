@@ -51,7 +51,6 @@ export default function Navbar(){
                   alt='logo' width={0} height={0} sizes='15vh' onClick={toggleMenuL}/>
                   </div>
                   :<TopMenuItem title='Login' pageRef='/login'/>
-                  
                   // <TopMenuItem title='Sign in' pageRef='/api/auth/signin'/>
               }
             </div>
@@ -62,7 +61,7 @@ export default function Navbar(){
               <div className="absolute  right-0 z-50 mt-[77px] w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Link href={'/profile'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-md" onClick={toggleMenuL}>My Profile</Link>
                 <Link href={'/mybooking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>My Bookings</Link>
-                <Link href={'/pointHistory'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Point Jaa</Link>
+                <Link href={'/pointHistory'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Point History</Link>
                 {
                   session?.user?.role=='admin'?<Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
                   :null
@@ -96,6 +95,7 @@ export default function Navbar(){
           <Link href={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Home</Link>
           <Link href={'/coworking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Coworking</Link>
           <Link href={'/about'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>About us</Link>
+          <Link href={'/pointHistory'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Point History</Link>
           
           {
                   session?
