@@ -15,9 +15,12 @@ import postReview from "@/libs/postReview"
 export default function Review() {
     const {data: session} = useSession()
     const urlParams = useSearchParams()
+    
     const rid = urlParams.get('id')
+
     const user = session?.user
     const name = urlParams.get('name')
+    const h = urlParams.get('hasReview')
     console.log(rid);
     console.log(name);
 
@@ -51,8 +54,8 @@ export default function Review() {
 
     return (
         <main className="mt-8">
-    {/* <div className="text-3xl font-bold text-center mb-6 text-[#252645]">Review</div> */}
-    <div className="bg-white min-h-full w-auto rounded-3xl m-8 px-16 py-12 md:px-15 md:mx-20 relative">
+        {/* <div className="text-3xl font-bold text-center mb-6 text-[#252645]">Review</div> */}
+        <div className="bg-white min-h-full w-auto rounded-3xl m-8 px-16 py-12 md:px-15 md:mx-20 relative">
         <div className="text-xl font-medium ">Review: {name}</div>
         <Box
             sx={{
@@ -92,7 +95,7 @@ export default function Review() {
             />
         </form>
         {
-            hasReviewed?<Link href={'/'}><button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">View My Review</button></Link>:<button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]" onClick={review}>Submit</button>
+            hasReviewed?<Link href={`/review/${rid}`}><button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">View My Review</button></Link>:<button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]" onClick={review}>Submit</button>
         }
     </div>
 </main>

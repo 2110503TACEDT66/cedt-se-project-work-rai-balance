@@ -5,6 +5,7 @@ import AllBooking from "@/components/AllBooking"
 import getBookings from "@/libs/getBookings"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import getReviewForReservation from "@/libs/getReviewforReservation"
 import deleteBooking from "@/libs/deleteBooking";
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react"
@@ -16,6 +17,7 @@ export default async function MyBooking() {
     if (!session || !session.user.token) return null
     
     const bookings = getBookings(session.user.token)
+    // const reviews = getReviewForReservation("661ad6b69586c1cdfb9a0113")
     
     return (
         <main>

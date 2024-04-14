@@ -11,6 +11,7 @@ export default async function AllBooking({
   bookingsJson: Promise<BookingJson>;
 }) {
   const bookingsJsonReady = await bookingsJson;
+  console.log(bookingsJsonReady)
 
   return (
     <>
@@ -45,11 +46,20 @@ export default async function AllBooking({
             <div className="text-md mt-2">By {BookingItem2.user}</div>
             <div className="mt-5 flex justify-end">
               <div className="ml-5">
-                <Link href={`/review?id=${BookingItem2._id}&name=${BookingItem2.coworking?.name}`}>
-                  <button className="block rounded-md bg-black hover:bg-indigo-900 px-6 py-2 text-white shadow-sm right-5 bottom-5">
-                    Review
-                  </button>
+              {BookingItem2.hasReview ?(
+                  <Link href={`/review/${BookingItem2._id}`}>
+                    <button className="block rounded-md bg-black hover:bg-indigo-900 px-6 py-2 text-white shadow-sm right-5 bottom-5">
+                      Review
+                    </button>
                 </Link>
+              ):(
+                <Link href={`/review?id=${BookingItem2._id}&name=${BookingItem2.coworking?.name}`}>
+                    <button className="block rounded-md bg-black hover:bg-indigo-900 px-6 py-2 text-white shadow-sm right-5 bottom-5">
+                      Review
+                    </button>
+                </Link>
+                )
+              }
               </div>
               
             </div>

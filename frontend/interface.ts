@@ -4,6 +4,7 @@ export interface BookingItem {
   bookDate: string
   start: string
   end: string
+  
   userId: string
 }
 
@@ -42,6 +43,7 @@ export interface BookingItem2 {
               }|null
   start: string
   end: string
+  hasReview : boolean
   createAt: string
   __v: string
 }
@@ -130,6 +132,28 @@ export interface HistoryJson {
   count: number,
   data: HistoryItem[]
 }
+export interface ReviewJson {
+  success: boolean,
+  count: number,
+  data: ReviewItem2[]
+}
+
+export interface ReviewItem2 {
+  data: {
+    coworking: {
+      _id: string
+      name: string
+      province: string
+      id: string
+    }|null
+  reservations: UserBookingItem[]
+  reservationId: string,
+  rating: Number,
+  comment: string
+  }
+    
+}
+
 
 export interface ReviewItem {
   reservationId: string,
@@ -138,7 +162,8 @@ export interface ReviewItem {
 }
 
 export interface ReviewItemEdit {
-  reviewId: string,
+  
   rating: Number,
   comment: string
 }
+
