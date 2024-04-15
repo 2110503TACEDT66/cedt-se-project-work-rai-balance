@@ -4,8 +4,8 @@ import { LinearProgress } from "@mui/material";
 
 import CoworkingCatalog from "@/components/CoworkingCatalog";
 
-export default function Coworking() {
-  const coworkings = getCoworkings();
+export default async function Coworking() {
+  const coworkings = await getCoworkings();
 
   return (
     <main className="text-center p-5">

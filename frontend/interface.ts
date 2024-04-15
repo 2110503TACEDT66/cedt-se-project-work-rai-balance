@@ -155,7 +155,6 @@ export interface ReviewItem2 {
     
 }
 
-
 export interface ReviewItem {
   reservationId: string,
   rating: Number,
