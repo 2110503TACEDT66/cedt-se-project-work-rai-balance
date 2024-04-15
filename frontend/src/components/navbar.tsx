@@ -33,7 +33,7 @@ export default function Navbar(){
           {/* Navbar title */}
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0">
-            <Image src={'/img/logo1.png'} className='w-[200px] ml-5 mt-auto mb-auto' alt='logo'
+            <Image src={'/img/logo.png'} className='w-[200px] ml-5 mt-auto mb-auto' alt='logo'
               width={0} height={0} sizes='100vh'/>
             
             </div>
