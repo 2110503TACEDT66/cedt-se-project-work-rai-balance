@@ -3,13 +3,15 @@ import Link from "next/link";
 import { UserUpdate } from "../../../../../../interface";
 import { useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { useRouter} from "next/navigation";
 import editUserProfile from "@/libs/editUserProfile";
 import { useSession } from "next-auth/react";
 
 export default function EditProfileUser({params}:{params:{uid:string}}) {
    const {data: session} = useSession()
-    if (!session || !session.user.token ) return null
-
+  if (!session || !session.user.token ) return null
+  const router = useRouter()
+  
     
   const [hasEdit, setHasEdit] = useState(false);
   const [data, setData] = useState({
@@ -22,6 +24,7 @@ export default function EditProfileUser({params}:{params:{uid:string}}) {
   const editProfile = async (e: FormEvent) => {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
+    
     console.log(data.name);
     if (data.name || data.email || data.telephone) {
       const item: Partial<UserUpdate> = {}
@@ -39,8 +42,10 @@ export default function EditProfileUser({params}:{params:{uid:string}}) {
             const editing = await editUserProfile(session.user.token, params.uid,item);
             console.log("Booking result:", editing);
             if (editing.success == true) {
-               setHasEdit(true)
-                
+              setHasEdit(true)
+              router.replace("/profile")
+              router.refresh()
+              
 
             }
             else if (editing.success == false) {

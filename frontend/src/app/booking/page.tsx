@@ -8,6 +8,7 @@ import { AppDispatch } from "@/redux/store";
 import { BookingItem } from "../../../interface"
 import { addBooking } from "@/redux/features/bookingSlice";
 import { useSession } from "next-auth/react";
+import { useRouter} from "next/navigation";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -21,6 +22,7 @@ export default function Booking() {
     const cid = urlParams.get('id');
     const user = session?.user._id;
     const name = urlParams.get('name');
+    const router = useRouter();
 
     
     const [hasBooked, setHasBooked] = useState(false);
@@ -43,6 +45,8 @@ export default function Booking() {
             if (booking.success) {
                 setHasBooked(true);
                 setButtonClicked(true); // Disable the button after successful booking
+                router.replace('/mybooking')
+                router.refresh()
             } else {
                 alert(booking.message);
             }

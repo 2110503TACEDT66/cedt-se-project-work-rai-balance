@@ -41,7 +41,7 @@ export default async function AllBooking({
                   //   </Link>
                   // </div>
                 ):(<div className="ml-5 flex flex-row">
-                    <Link href={"/mybooking/edit/" + BookingItem2._id}>
+                    <Link href={"/mybooking/edit/" + BookingItem2._id} >
                     <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
                       width={0} height={0} sizes='100vh'/>
                     </Link>

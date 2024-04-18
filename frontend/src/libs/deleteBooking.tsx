@@ -10,7 +10,7 @@ export default async function deleteBooking(token: string, bookingId: string){
     })
     
     if(!response.ok){
-        throw new Error("Failed to delete booking")
+        return await response.json()
     }
 
     return await response.json()

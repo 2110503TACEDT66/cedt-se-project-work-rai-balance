@@ -43,6 +43,7 @@ export default function EditReview({ params }: { params: { rid: string } }) {
       if (editing.success == true) {
         setHasEdit(true);
         router.refresh();
+        router.replace("/mybooking")
       } else if (editing.success == false) {
         alert(editing.message);
       }

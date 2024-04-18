@@ -34,6 +34,7 @@ export default function EditBookingPage({params}:{params:{mid:string}}) {
           console.log("Booking result:", updateBooking);
           if (updateBooking.success == true) {
             setHasEditBooking(true)
+            
           }
           else if (updateBooking.success == false) {
               alert(updateBooking.message)
