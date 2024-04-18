@@ -35,7 +35,7 @@ export default function EditBookingPage({params}:{params:{mid:string}}) {
           if (updateBooking.success == true) {
             setHasEditBooking(true)
             router.replace("/mybooking")
-
+            router.refresh()
           }
           else if (updateBooking.success == false) {
               alert(updateBooking.message)

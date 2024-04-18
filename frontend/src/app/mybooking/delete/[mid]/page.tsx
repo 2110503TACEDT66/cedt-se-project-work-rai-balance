@@ -14,7 +14,6 @@ export default async function DeleteBookingPage({params}:{params:{mid:string}}) 
     if(deletedBookings.succes == false){
         alert(deletedBookings .message)
     }
-
     return (
         <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">
             <div className="bg-white p-5 rounded-3xl drop-shadow-xl w-auto">
