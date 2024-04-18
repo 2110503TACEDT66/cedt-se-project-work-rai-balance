@@ -1,4 +1,3 @@
-'use client'
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import deleteBooking from "@/libs/deleteBooking";
@@ -8,17 +7,14 @@ import Link from "next/link";
 export default async function DeleteBookingPage({params}:{params:{mid:string}}) {
     const session = await getServerSession(authOptions)
     if (!session || !session.user.token) return null
-   const router = useRouter();
     
     const deletedBookings = await deleteBooking(session.user.token, params.mid)
     console.log("result:", deletedBookings)
     
     if(deletedBookings.succes == false){
         alert(deletedBookings .message)
-    }else{
-        router.replace("/mybooking")
-        router.refresh()
     }
+
     return (
         <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">
             <div className="bg-white p-5 rounded-3xl drop-shadow-xl w-auto">
