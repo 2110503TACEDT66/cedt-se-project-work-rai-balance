@@ -1,5 +1,5 @@
 'use client'
-
+import { useRouter } from 'next/navigation';
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
@@ -17,7 +17,7 @@ import Link from "next/link";
 export default function EditBookingPage({params}:{params:{mid:string}}) {
    const {data: session} = useSession()
    if (!session || !session.user.token) return null
-   
+   const router = useRouter();
    const urlParams = useSearchParams()
    
    const [hasEditBooking, setHasEditBooking] = useState(false)
@@ -28,13 +28,14 @@ export default function EditBookingPage({params}:{params:{mid:string}}) {
    
    const edit = async () => {
       if ( apptDate &&  start && end) {
-          
+        
          const updateBooking = await editBooking(session.user.token,params.mid ,dayjs(apptDate).format("YYYY/MM/DD"),dayjs(start).format('HH:mm:ss'),dayjs(end).format('HH:mm:ss'));
           console.log(updateBooking)
           console.log("Booking result:", updateBooking);
           if (updateBooking.success == true) {
             setHasEditBooking(true)
-            
+            router.replace("/mybooking")
+
           }
           else if (updateBooking.success == false) {
               alert(updateBooking.message)
