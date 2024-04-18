@@ -7,24 +7,24 @@ export default function ContentCowork() {
       <div className="flex flex-wrap justify-center">
         <div className="rounded-lg w-[230px] h-[350px] mx-3 my-5 relative">
           <Image
-            src={"/img/promote.png"}
+            src={"/img/promote.jpg"}
             alt="Product Picture"
             fill={true}
-            className="object-cover absolute rounded-lg my-20 shadow-xl"
+            className="object-cover rounded-lg my-20 shadow-xl"
           />
         </div>
 
-        <div className="absolute m-5 p-5 w-[70%] relative my-20">
-          <div className="text-[#252645] font-bold text-[35px] text-left">
+        <div className="m-5 p-5 w-full md:w-[70%] relative my-20">
+          <div className="text-[#252645] font-bold text-[5vw] md:text-[35px] text-left">
             Coworking in Bangkok
           </div>
-          <div className="text-black text-[18px] mt-6 text-justify">
+          <div className="text-black text-[3vw] md:text-[18px] mt-6 text-justify">
             Work along like-minded professionals in our vibrant coworking spaces
             in Bangkok, with break out areas and networking events to foster
             collaboration and growth. Drop in and hot-desk in an open-plan
             workspace, or reserve your own dedicated desk in a shared office.
           </div>
-          <div className="text-black font-bold text-[18px] mt-12">
+          <div className="text-black font-bold text-[3vw] md:text-[18px] mt-[5vw] md:mt-12">
             How can we support you in Bangkok:
           </div>
           <ul className="pt-1 pl-2 list-disc list-inside">
@@ -57,30 +57,36 @@ export default function ContentCowork() {
         </div>
 
         <div className="block flex items-center justify-center overflow-hidden mb-20">
-          <div className="mr-20">
+          <div className="mr-8 md:mr-20 relative w-[30%] md:w-[25%] h-[20vw] md:h-[500px]">
             <Image
               src={"/img/card1.jpg"}
               alt="Wolf Coworking Space"
-              width={300}
-              height={300}
+              width={500}
+              height={500}
+              // layout="fill"
+              objectFit="cover"
               className="object-cover"
             />
           </div>
-          <div className="mr-20">
+          <div className="mr-8 md:mr-20 relative w-[30%] md:w-[25%] h-[20vw] md:h-[500px]">
             <Image
               src={"/img/card2.jpg"}
               alt="Wolf Coworking Space"
-              width={300}
-              height={300}
+              width={500}
+              height={500}
+              // layout="fill"
+              objectFit="cover"
               className="object-cover"
             />
           </div>
-          <div>
+          <div className="relative w-[30%] md:w-[25%] h-[20vw] md:h-[500px]">
             <Image
               src={"/img/card3.jpg"}
               alt="Wolf Coworking Space"
-              width={300}
-              height={300}
+              width={500}
+              height={500}
+              // layout="fill"
+              objectFit="cover"
               className="object-cover"
             />
           </div>
