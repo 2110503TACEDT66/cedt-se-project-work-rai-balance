@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { TextField } from "@mui/material";
 import postReview from "@/libs/postReview"
 import Image from "next/image";
+import { useRouter} from "next/navigation";
 
 export default function Review() {
     const {data: session} = useSession()
@@ -25,6 +26,7 @@ export default function Review() {
     console.log(rid);
     console.log(name);
 
+    const router = useRouter();
     const [hasReviewed, setHasReviewed] = useState(false)
 
     const review = async () => {
@@ -41,6 +43,7 @@ export default function Review() {
             console.log("Review result:", creatingReview);
             if (creatingReview.success == true) {
                 setHasReviewed(true)
+                router.refresh()
             }
             else if (creatingReview.success == false) {
                 alert(creatingReview.message)

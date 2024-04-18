@@ -67,7 +67,7 @@ export default async function AllBooking({
               {BookingItem2.hasReview ?(
                   <Link href={`/review/${BookingItem2._id}`}>
                     <button className="block rounded-md bg-black hover:bg-indigo-900 px-6 py-2 text-white shadow-sm right-5 bottom-5">
-                      Review
+                      My Review
                     </button>
                 </Link>
               ):(
