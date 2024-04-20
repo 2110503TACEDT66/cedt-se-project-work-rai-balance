@@ -110,7 +110,6 @@ exports.getCoworking = async (req, res, next) => {
 // @routes      POST /api/project/coworkings
 // @access      Private
 exports.createCoworking = async (req, res, next) => {
-  // console.log(req.body);
   const coworking = await Coworking.create(req.body);
   res.status(201).json({ success: true, data: coworking });
 };

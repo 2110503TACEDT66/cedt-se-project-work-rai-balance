@@ -2,6 +2,7 @@ const Point = require("../models/Point");
 
 // @desc        Get all point history
 // @routes      Get /api/project/points
+// @routes      Get /api/project/auth/:userId/points
 // @access      Public
 exports.getPointHistories = async (req, res, next) => {
     let query;

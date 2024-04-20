@@ -33,20 +33,17 @@ exports.addReview = async (req, res, next) => {
 
       const existedReview = await Review.find({ reservation: req.params.reservationId });
 
-      // can only create 1 review per reservation
+      // Can only create 1 review per reservation
       if (existedReview.length >= 1) {
         return res.status(400).json({
           success: false,
           message: `The user has already made a review for reservation ${req.body.reservation}`,
         });
       }
-      // console.log('Time: ' + Date.now());
 
       const now = new Date().toISOString();
-      console.log('Time: ' + now);
-
+      // console.log('Time: ' + now);
       const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
-
       if (endReservation > now) {
         return res.status(400).json({
           success: false,
@@ -54,10 +51,6 @@ exports.addReview = async (req, res, next) => {
         });
       }
 
-      // if (reservation.apptDate > Date.now().split('T')[0])
-      // {
-        
-      // }
       //Check count of review
       // const existedReview = await Review.find({ user: req.body.user });
       // the user can only create 3 review
@@ -93,7 +86,7 @@ exports.addReview = async (req, res, next) => {
   }
 }
 
-//desc    Update reservation
+//desc    Update review
 //route   PUT /api/project/reviews/:Id
 //access  Private
 exports.updateReview = async (req, res, next) => {
@@ -158,6 +151,10 @@ exports.updateReview = async (req, res, next) => {
   }
 }
 
+
+//desc    Update review's approval field
+//route   PUT /api/project/reviews/:Id/approve
+//access  Private
 exports.approveReview = async (req, res, next) => {
   try {
     let review = await Review.findById(req.params.id);
@@ -171,7 +168,6 @@ exports.approveReview = async (req, res, next) => {
 
     //Make sure user is the reservation owner
     if (
-      // review.user.toString() !== req.user.id &&
       req.user.role !== "admin"
     ) {
       return res.status(401).json({
@@ -185,7 +181,7 @@ exports.approveReview = async (req, res, next) => {
       runValidators: true,
     });
 
-    reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
+    const reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
       new: true,
       runValidators: true,
     });
@@ -219,15 +215,18 @@ exports.approveReview = async (req, res, next) => {
   }
 }
 
+//desc    GET reviews
+//route   GET /api/project/reviews
+//access  Private
 exports.getAllReviews = async (req, res, next) => {
   try{
-    
+    //admin only
 
   }catch(err){
       console.log(err.stack);
       return res.status(500).json({
         success: false,
-        message: "Cannot update Review",
+        message: "Cannot update Reviewget reviews",
       });
   }
 }
@@ -254,7 +253,7 @@ exports.getReview = async (req, res, next) => {
     console.error(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Unable to retrieve review",
+      message: "Unable to get review",
     });
   }
 }

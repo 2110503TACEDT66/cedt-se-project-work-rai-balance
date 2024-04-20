@@ -107,7 +107,6 @@ exports.addReservation = async (req, res, next) => {
     //   });
     // }
 
-    //const start = req.body.apptDate.split('T')[1].split('.')[0];
     if (
       req.body.start.localeCompare(coworking.opentime) < 0 ||
       req.body.end.localeCompare(coworking.closetime) > 0
@@ -189,9 +188,7 @@ exports.updateReservation = async (req, res, next) => {
     }
 
     const now = new Date().toISOString();
-    // console.log('Time: ' + now);
     const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
-
     if (endReservation <= now) {
       return res.status(401).json({
         success: false,
@@ -229,7 +226,7 @@ exports.updateReservation = async (req, res, next) => {
     console.log(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Cannot update Reservation",
+      message: "Cannot update reservation",
     });
   }
 };
@@ -259,15 +256,9 @@ exports.deleteReservation = async (req, res, next) => {
       });
     }
 
-    // const reservationStartDate = new Date(`${reservation.apptDate.split('T')[0]}T${reservation.start}`);
-    // const currentDate = Date.now();
-    // console.log(reservationStartDate);
     const now = new Date().toISOString();
     // console.log('Time: ' + now);
-
     const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
-
-
     if (endReservation <= now) {
       return res.status(401).json({
         success: false,
