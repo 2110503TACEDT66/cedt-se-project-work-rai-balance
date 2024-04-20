@@ -16,7 +16,6 @@ const { protect, authorize } = require("../middleware/auth");
 //Re-route into other resource routers
 router.use("/:reservationId/reviews/", reviewRouter);
 
-
 router
   .route("/")
   .get(protect, getReservations)

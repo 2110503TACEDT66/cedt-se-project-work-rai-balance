@@ -24,13 +24,25 @@ const ReservationSchema = new mongoose.Schema({
     required: true,
   },
   hasReview: {
-    type: Boolean,
-    default: false
+    type: String,
+    enum: ["no", "pending", "approved", "disapproved"],
+    default: "no"
   },
   createAt: {
     type: Date,
     default: Date.now,
   },
 });
+
+ReservationSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    console.log(`Review begins removed from reesrvation ${this._id}`);
+    await this.model("Review").deleteMany({ reservation: this._id });
+    console.log('Remove successfully');
+    next();
+  }
+);
 
 module.exports = mongoose.model("Reservation", ReservationSchema);

@@ -137,7 +137,7 @@ exports.addReservation = async (req, res, next) => {
     const point = await Point.create({
       user: user._id,
       updatedPoint: user.currentPoint-1,
-      change: "-1",
+      change: "Deduct 1",
       message: "Make reservation successfully"
     })
 
@@ -185,6 +185,17 @@ exports.updateReservation = async (req, res, next) => {
       return res.status(401).json({
         success: false,
         message: `User ${req.user.id} is not authorized to update this reservation`,
+      });
+    }
+
+    const now = new Date().toISOString();
+    // console.log('Time: ' + now);
+    const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
+
+    if (endReservation <= now) {
+      return res.status(401).json({
+        success: false,
+        message: "Cannot update an already due reservation",
       });
     }
 
@@ -247,27 +258,29 @@ exports.deleteReservation = async (req, res, next) => {
         message: `User ${req.user.id} is not authorized to delete this reservation`,
       });
     }
-   
-    if(reservation.hasReview){
-      return res.status(401).json({
-        success: false,
-        message: `User ${req.user.id} can not delete this reservation because you have review`,
-      });
-    }
 
     // const reservationStartDate = new Date(`${reservation.apptDate.split('T')[0]}T${reservation.start}`);
     // const currentDate = Date.now();
     // console.log(reservationStartDate);
-    const currentDate = new Date();
-    const currentTime = currentDate.toTimeString().split(' ')[0]; // Extract time part
-    console.log(currentTime);
+    const now = new Date().toISOString();
+    // console.log('Time: ' + now);
 
-    if (reservation.apptDate <= Date.now() && reservation.start.localeCompare(currentTime) <= 0) {
+    const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
+
+
+    if (endReservation <= now) {
       return res.status(401).json({
         success: false,
         message: "Cannot delete an already due reservation",
       });
     }
+
+    // if(reservation.hasReview !== "no"){
+    //   return res.status(401).json({
+    //     success: false,
+    //     message: `User ${req.user.id} can not delete this reservation because you have review`,
+    //   });
+    // }
 
     await reservation.deleteOne();
 
@@ -276,7 +289,7 @@ exports.deleteReservation = async (req, res, next) => {
     const point = await Point.create({
       user: user._id,
       updatedPoint: user.currentPoint + 1,
-      change: "+1",
+      change: "Add 1",
       message: "Delete reservation successfully"
     });
 

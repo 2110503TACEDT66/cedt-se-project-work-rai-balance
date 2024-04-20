@@ -78,6 +78,18 @@ UserSchema.pre(
   }
 );
 
+// Cascade delete point histories when a user is deleted
+UserSchema.pre(
+  "deleteOne",
+  { document: true, query: false },
+  async function (next) {
+    console.log(`Point histories begin removed from user ${this._id}`);
+    await this.model("Point").deleteMany({ user: this._id });
+    console.log('Remove successfully');
+    next();
+  }
+);
+
 // Reverse populate with virtuals
 UserSchema.virtual("reservations", {
   ref: "Reservation",

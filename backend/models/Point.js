@@ -14,7 +14,7 @@ const PointSchema = new mongoose.Schema(
     },
     change: {
       type: String,
-      enum: ["-1", "+2", "+1"]
+      enum: ["Deduct 1", "Add 2", "Add 1"]
     },
     message: {
       type: String,

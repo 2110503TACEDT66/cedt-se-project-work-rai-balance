@@ -16,7 +16,7 @@ exports.register = async (req, res, next) => {
     const point = await Point.create({
       user: user._id,
       updatedPoint: 2,
-      change: "+2",
+      change: "Add 2",
       message: "Register successfully"
   });
 

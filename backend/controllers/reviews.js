@@ -40,6 +40,24 @@ exports.addReview = async (req, res, next) => {
           message: `The user has already made a review for reservation ${req.body.reservation}`,
         });
       }
+      // console.log('Time: ' + Date.now());
+
+      const now = new Date().toISOString();
+      console.log('Time: ' + now);
+
+      const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
+
+      if (endReservation > now) {
+        return res.status(400).json({
+          success: false,
+          message: `The user cannot make review before due time`,
+        });
+      }
+
+      // if (reservation.apptDate > Date.now().split('T')[0])
+      // {
+        
+      // }
       //Check count of review
       // const existedReview = await Review.find({ user: req.body.user });
       // the user can only create 3 review
@@ -54,13 +72,12 @@ exports.addReview = async (req, res, next) => {
         coworking: req.body.coworking,
         reservation: req.params.reservationId,
         user: req.user.id,
-        approved : false,
-        passed : false,
+        approval,
         rating: req.body.rating,
         comment: req.body.comment
       });
 
-      const reservationHasReview = await Reservation.findByIdAndUpdate(req.params.reservationId, { hasReview: true})
+      const reservationHasReview = await Reservation.findByIdAndUpdate(req.params.reservationId, { hasReview: "pending"})
 
       // const user = await User.findById(req.user.id);
       res.status(201).json({
@@ -81,6 +98,11 @@ exports.addReview = async (req, res, next) => {
 //access  Private
 exports.updateReview = async (req, res, next) => {
   try{
+    if (req.body.approval) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Can not change approval" });
+    }
     let review = await Review.findById(req.params.id);
 
     let reservation = await Reservation.findById(review.reservation);
@@ -100,6 +122,20 @@ exports.updateReview = async (req, res, next) => {
       return res.status(401).json({
         success: false,
         message: `User ${req.user.id} is not authorized to update this reservation`,
+      });
+    }
+
+    if (review.approval == "approved") {
+      return res.status(401).json({
+        success: false,
+        message: `Your review has already been approved and you cannot make changes`,
+      });
+    }
+
+    if (review.approval == "disapproved") {
+      return res.status(401).json({
+        success: false,
+        message: `Your review has already been disapproved and you cannot make changes`,
       });
     }
 
@@ -144,18 +180,23 @@ exports.approveReview = async (req, res, next) => {
       });
     }
 
-    review = await Review.findByIdAndUpdate(req.params.id, {approved: true, passed: req.body.passed}, {
+    review = await Review.findByIdAndUpdate(req.params.id, {approval: req.body.approval}, {
+      new: true,
+      runValidators: true,
+    });
+
+    reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
       new: true,
       runValidators: true,
     });
 
     const user = await User.findById(review.user);
 
-    if (req.body.passed == true) {
+    if (req.body.approval == "approved") {
       const point = await Point.create({
         user: user,
         updatedPoint: user.currentPoint+2,
-        change: "+2",
+        change: "Add 2",
         message: "Your review has been approved"
       })
   
@@ -178,7 +219,7 @@ exports.approveReview = async (req, res, next) => {
   }
 }
 
-exports.getUnapprovedReviews = async (req, res, next) => {
+exports.getAllReviews = async (req, res, next) => {
   try{
     
 

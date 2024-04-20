@@ -18,13 +18,10 @@ const ReviewSchema = new mongoose.Schema(
          ref: "User",
          required: true,
        },
-      approved: {
-        type: Boolean,
-        default: false
-      },
-      passed: {
-        type: Boolean,
-        default: false
+      approval: {
+        type: String,
+        enum: ["pending", "approved", "disapproved"],
+        default: "pending"
       },
      rating: {
        type: Number,

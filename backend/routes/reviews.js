@@ -17,6 +17,6 @@ router
   router
   .route("/:id")
   .put(protect, authorize("user"), updateReview)
-  .put(protect, authorize("admin"), approveReview)
+  router.route("/:id/approve").put(protect, authorize("admin"), approveReview)
 
 module.exports = router;
