@@ -216,12 +216,16 @@ exports.approveReview = async (req, res, next) => {
 }
 
 //desc    GET reviews
-//route   GET /api/project/reviews
+//route   GET /api/project/reviews/all
 //access  Private
 exports.getAllReviews = async (req, res, next) => {
   try{
-    //admin only
+    const reviews = await Review.find();
 
+    res.status(200).json({
+      success: true,
+      data: reviews,
+    });
   }catch(err){
       console.log(err.stack);
       return res.status(500).json({
@@ -231,29 +235,92 @@ exports.getAllReviews = async (req, res, next) => {
   }
 }
 
-//desc    GET review by reservationId
-//route   GET /api/project/reservations/:reservationId/review
+//desc    GET reviews
+//route   GET /api/project/reviews/all
 //access  Private
-exports.getReview = async (req, res, next) => {
-  try {
-    const review = await Review.findOne({ reservation: req.params.reservationId });
-
-    if (!review) {
-      return res.status(404).json({
-        success: false,
-        message: `No review found for reservation with the id of ${req.params.reservationId}`,
-      });
-    }
+exports.getAllReviews = async (req, res, next) => {
+  try{
+    const reviews = await Review.find();
 
     res.status(200).json({
       success: true,
-      data: review,
+      data: reviews,
     });
-  } catch (err) {
-    console.error(err.stack);
+  }catch(err){
+      console.log(err.stack);
+      return res.status(500).json({
+        success: false,
+        message: "Cannot update Reviewget reviews",
+      });
+  }
+}
+
+//desc    GET reviews
+//route   GET /api/project/reviews/all
+//access  Private
+exports.getAllUnapproveReviews = async (req, res, next) => {
+  try{
+    const pendingReviews = await Review.find({ approval: 'pending' }).exec();
+  
+
+    res.status(200).json({
+      success: true,
+      data: pendingReviews,
+    });
+  }catch(err){
+      console.log(err.stack);
+      return res.status(500).json({
+        success: false,
+        message: "Cannot update Reviewget reviews",
+      });
+  }
+}
+
+
+
+//desc GET review by reviewId
+//route GET /api/project/reviews/:reviewId
+//access Private
+exports.getReviewById = async (req, res, next) => {
+  try{
+    const review = await Review.findById(req.params.id)
+
+    res.status(200).json({
+      success: true,
+      data:review
+    })
+  }catch(err){
+    console.log(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Unable to get review",
+      message: "Cannot find Review",
     });
   }
 }
+
+// //desc    GET review by reservationId
+// //route   GET /api/project/reservations/:reservationId/review
+// //access  Private
+// exports.getReview = async (req, res, next) => {
+//   try {
+//     const review = await Review.findOne({ reservation: req.params.reservationId });
+
+//     if (!review) {
+//       return res.status(404).json({
+//         success: false,
+//         message: `No review found for reservation with the id of ${req.params.reservationId}`,
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data: review,
+//     });
+//   } catch (err) {
+//     console.error(err.stack);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Unable to get review",
+//     });
+//   }
+// }
