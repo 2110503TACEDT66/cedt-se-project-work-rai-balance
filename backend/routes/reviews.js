@@ -4,31 +4,21 @@ const {
    approveReview,
    getReview,
    updateReview,
-   getAllReviews,
-   getReviewById,
-   getAllUnapproveReviews
+   getReviews
  } = require("../controllers/reviews");
 
  const router = express.Router({ mergeParams: true });
 
 const { protect, authorize } = require("../middleware/auth");
 
-
-
 router
   .route("/")
-  .post(protect, authorize("user"), addReview)
-  .get(protect, authorize("admin"), getAllReviews);
-
-  router.route("/pending").get(protect,authorize("user", "admin"),getAllUnapproveReviews)
-// router
-//   .route("/all")
-//   .get(protect, authorize("admin"), getAllReviews);
-  
+  .post(protect, authorize("user", "admin"), addReview)
+  .get(protect, authorize("user", "admin"), getReview);
   router
   .route("/:id")
   .put(protect, authorize("user"), updateReview)
-  .get(protect,authorize("user", "admin"),getReviewById )
   router.route("/:id/approve").put(protect, authorize("admin"), approveReview)
+router.route("/all").post(protect, authorize("admin"), getReviews)
 
 module.exports = router;
