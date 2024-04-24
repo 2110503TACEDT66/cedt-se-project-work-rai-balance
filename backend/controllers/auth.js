@@ -151,7 +151,7 @@ exports.getAllUsers = async (req, res, next) => {
 
     // Finding resource
     query = User.find(JSON.parse(queryStr)).populate("reservations");
-    query = query.find({ role: "user" });
+    query = query.find({ role: { $in: ["user", "banned user"] } });
 
     // Select Fields
     if (req.query.select) {
@@ -267,4 +267,76 @@ exports.updateMe = async (req, res, next) => {
   } catch (err) {
     res.status(400).json({ success: false });
   }
+};
+
+//desc    Ban user
+//route   GET /api/project/auth/:userId/ban
+//access  Private
+exports.banUser = async (req, res, next) => {
+  const user = await User.findById(req.params.userId);
+  console.log(user);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: `User not found`,
+    });
+  }
+
+  if (user.currentPoint > 0) {
+    return res.status(400).json({
+      success: false,
+      message: `User's point is not zero, cannot ban`,
+    });
+  }
+
+  const reviewWithoutApproval = await Reservation.countDocuments({
+    user: user._id,
+    $or: [
+      { hasReview: "no" },
+      { hasReview: "pending" }
+    ]
+  });
+
+  if (reviewWithoutApproval > 0) {
+    return res.status(400).json({
+      success: false,
+      message: `User have chances to leave a review or his/her reviews are waiting to be approved, cannot ban`,
+    });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.params.userId, {role: "banned user"}, {
+    new: true,
+    runValidators: true,
+  });
+  
+  res.status(200).json({
+    success: true,
+    data: updatedUser,
+  });
+};
+
+//desc    Unban user
+//route   GET /api/project/auth/:userId/unban
+//access  Private
+exports.unbanUser = async (req, res, next) => {
+  const user = await User.findById(req.params.userId);
+  console.log(user);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: `User not found`,
+    });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(req.params.userId, {role: "user"}, {
+    new: true,
+    runValidators: true,
+  });
+  
+  res.status(200).json({
+    success: true,
+    data: updatedUser,
+  });
 };

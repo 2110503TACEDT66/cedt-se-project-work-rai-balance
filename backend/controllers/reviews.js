@@ -13,6 +13,13 @@ exports.addReview = async (req, res, next) => {
       
       const reservation = await Reservation.findById(req.params.reservationId);
       console.log(req.params.reservationId);
+
+      if (req.user.role === "banned user") {
+        return res.status(404).json({
+          success: false,
+          message: `You are banned`,
+        });
+      }
       
       if (!reservation) {
          return res.status(404).json({
@@ -65,7 +72,7 @@ exports.addReview = async (req, res, next) => {
         coworking: req.body.coworking,
         reservation: req.params.reservationId,
         user: req.user.id,
-        approval,
+        approval: "pending",
         rating: req.body.rating,
         comment: req.body.comment
       });
@@ -91,6 +98,13 @@ exports.addReview = async (req, res, next) => {
 //access  Private
 exports.updateReview = async (req, res, next) => {
   try{
+    if (req.user.role === "banned user") {
+      return res.status(404).json({
+        success: false,
+        message: `You are banned`,
+      });
+    }
+    
     if (req.body.approval) {
       return res
         .status(400)
@@ -215,32 +229,59 @@ exports.approveReview = async (req, res, next) => {
   }
 }
 
-//desc    GET review by reservationId
-//route   GET /api/project/reservations/:reservationId/reviews
-//access  Private
-exports.getReview = async (req, res, next) => {
-  try {
-    const review = await Review.findOne({ reservation: req.params.reservationId });
+//desc GET review by reviewId
+//route GET /api/project/reviews/:reviewId
+//access Private
+exports.getReviewById = async (req, res, next) => {
+  try{
+    const review = await Review.findById(req.params.id);
 
     if (!review) {
       return res.status(404).json({
         success: false,
-        message: `No review found for reservation with the id of ${req.params.reservationId}`,
+        message: `No review with the id of ${req.params.id}`,
       });
     }
 
     res.status(200).json({
       success: true,
-      data: review,
-    });
-  } catch (err) {
-    console.error(err.stack);
+      data:review
+    })
+  }catch(err){
+    console.log(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Cannot get review",
+      message: "Cannot find review",
     });
   }
 }
+
+// //desc    GET review by reservationId
+// //route   GET /api/project/reservations/:reservationId/reviews
+// //access  Private
+// exports.getReview = async (req, res, next) => {
+//   try {
+//     const review = await Review.findOne({ reservation: req.params.reservationId });
+
+//     if (!review) {
+//       return res.status(404).json({
+//         success: false,
+//         message: `No review found for reservation with the id of ${req.params.reservationId}`,
+//       });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data: review,
+//     });
+//   } catch (err) {
+//     console.error(err.stack);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Cannot get review",
+//     });
+//   }
+// }
 
 //desc    Get all reviews
 //route   POST /api/project/reviews/all
@@ -259,6 +300,34 @@ exports.getReviews = async (req, res, next) => {
     }
 
     const reviews = await query;
+
+    res.status(200).json({
+      success: true,
+      count: reviews.length,
+      data: reviews,
+    });
+  } catch (err) {
+    console.error(err.stack);
+    return res.status(500).json({
+      success: false,
+      message: "Cannot get reviews",
+    });
+  }
+}
+
+//desc    GET reviews by coworkingId
+//route   GET /api/project/coworkings/:coworkingId/reviews
+//access  Private
+exports.getReviewsByCoworking = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ coworking: req.params.coworkingId, approval: "approved" });
+
+    if (!reviews) {
+      return res.status(404).json({
+        success: false,
+        message: `No review found for coworking with the id of ${req.params.coworkingId}`,
+      });
+    }
 
     res.status(200).json({
       success: true,

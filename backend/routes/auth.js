@@ -7,7 +7,9 @@ const {
   logout,
   getAllUsers,
   deleteMe,
-  updateMe
+  updateMe,
+  banUser,
+  unbanUser
 } = require("../controllers/auth");
 
 const router = express.Router();
@@ -25,5 +27,7 @@ router.get("/me", protect, getMe);
 router.get("/getallusers", protect, authorize("admin"), getAllUsers);
 router.delete("/deleteMe", protect, deleteMe);
 router.put("/updateMe", protect, updateMe);
+router.route("/:userId/ban").get(protect, authorize("admin"), banUser);
+router.route("/:userId/unban").get(protect, authorize("admin"), unbanUser);
 
 module.exports = router;

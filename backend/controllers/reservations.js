@@ -86,6 +86,13 @@ exports.addReservation = async (req, res, next) => {
 
     const coworking = await Coworking.findById(req.params.coworkingId);
 
+    if (req.user.role === "banned user") {
+      return res.status(404).json({
+        success: false,
+        message: `You are banned`,
+      });
+    }
+
     if (!coworking) {
       return res.status(404).json({
         success: false,
@@ -168,6 +175,13 @@ exports.updateReservation = async (req, res, next) => {
 
     let coworking = await Coworking.findById(reservation.coworking);
 
+    if (req.user.role === "banned user") {
+      return res.status(404).json({
+        success: false,
+        message: `You are banned`,
+      });
+    }
+
     //const coworking = await Coworking.findById(req.params.coworkingId);
     if (!reservation) {
       return res.status(404).json({
@@ -237,6 +251,13 @@ exports.updateReservation = async (req, res, next) => {
 exports.deleteReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id);
+
+    if (req.user.role === "banned user") {
+      return res.status(404).json({
+        success: false,
+        message: `You are banned`,
+      });
+    }
 
     if (!reservation) {
       return res.status(404).json({
