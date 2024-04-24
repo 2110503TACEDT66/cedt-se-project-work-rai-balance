@@ -179,6 +179,19 @@ exports.getAllUsers = async (req, res, next) => {
     // Executing query
     const users = await query;
 
+    // Get the count of reservations for each user
+    const usersWithReservationCounts = await Promise.all(users.map(async (user) => {
+      const reservationCount = await Reservation.countDocuments({ user: user._id });
+      const reviewWithoutApproval = await Reservation.countDocuments({
+        user: user._id,
+        $or: [
+          { hasReview: "no" },
+          { hasReview: "pending" }
+        ]
+      });
+      return { ...user.toObject(), reservationCount, reviewWithoutApproval };
+    }));
+
     // Pagination query
     const pagination = {};
     if (endIndex < total) {
@@ -196,9 +209,9 @@ exports.getAllUsers = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      count: users.length,
+      count: usersWithReservationCounts.length,
       pagination,
-      data: users,
+      data: usersWithReservationCounts,
     });
   } catch (err) {
     res.status(400).json({
