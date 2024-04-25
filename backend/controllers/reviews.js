@@ -259,29 +259,29 @@ exports.getReviewById = async (req, res, next) => {
 // //desc    GET review by reservationId
 // //route   GET /api/project/reservations/:reservationId/reviews
 // //access  Private
-// exports.getReview = async (req, res, next) => {
-//   try {
-//     const review = await Review.findOne({ reservation: req.params.reservationId });
+exports.getReview = async (req, res, next) => {
+  try {
+    const review = await Review.findOne({ reservation: req.params.reservationId });
 
-//     if (!review) {
-//       return res.status(404).json({
-//         success: false,
-//         message: `No review found for reservation with the id of ${req.params.reservationId}`,
-//       });
-//     }
+    if (!review) {
+      return res.status(404).json({
+        success: false,
+        message: `No review found for reservation with the id of ${req.params.reservationId}`,
+      });
+    }
 
-//     res.status(200).json({
-//       success: true,
-//       data: review,
-//     });
-//   } catch (err) {
-//     console.error(err.stack);
-//     return res.status(500).json({
-//       success: false,
-//       message: "Cannot get review",
-//     });
-//   }
-// }
+    res.status(200).json({
+      success: true,
+      data: review,
+    });
+  } catch (err) {
+    console.error(err.stack);
+    return res.status(500).json({
+      success: false,
+      message: "Cannot get review",
+    });
+  }
+}
 
 //desc    Get all reviews
 //route   POST /api/project/reviews/all

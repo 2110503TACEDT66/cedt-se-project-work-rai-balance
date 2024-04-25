@@ -5,6 +5,7 @@ const {
    getReviewsByCoworking,
    updateReview,
    getReviews,
+   getReview,
    getReviewById
  } = require("../controllers/reviews");
 
@@ -15,6 +16,7 @@ const { protect, authorize } = require("../middleware/auth");
 router
   .route("/")
   .post(protect, authorize("user", "admin", "banned user"), addReview)
+  .get(protect, authorize("user", "admin"), getReview)
   .get(protect, getReviewsByCoworking);
   router
   .route("/:id")

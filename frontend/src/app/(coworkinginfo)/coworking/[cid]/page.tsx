@@ -4,10 +4,15 @@ import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import AllReviews from "@/components/AllReviews";
+import getAllReviewsByCoworkingId from "@/libs/getReviewsByCoworkingId";
 
 export default async function CoworkingDetailPage({params}:{params:{cid:string}}){
    const session = await getServerSession(authOptions)
    const coworkingDetail = await getCoworking(params.cid)
+   const token = session?.user?.token ?? '';
+   const reviews = await getAllReviewsByCoworkingId(token, params.cid);
+
    
    console.log(params.cid)
    return(
@@ -33,9 +38,7 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                         <tr><td>tel.</td><td>{'    '}</td><td>{ coworkingDetail.data.telephone }</td></tr>
                         <tr><td>open - close time</td><td>{'    '}</td><td>{ coworkingDetail.data.opentime } - {coworkingDetail.data.closetime}</td></tr>
                      </tbody>
-                  </table>
-                  
-                     
+                  </table>   
                      
             </div>
             <div className="px-5 my-2">
@@ -48,6 +51,8 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                   }
             </div>
          </div>
+         
+         <AllReviews reviewJson={reviews}/>
              
       </main>
    )

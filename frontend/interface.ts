@@ -43,7 +43,7 @@ export interface BookingItem2 {
               }|null
   start: string
   end: string
-  hasReview : boolean
+  hasReview : string
   createAt: string
   __v: string
 }
@@ -149,7 +149,7 @@ export interface ReviewItem2 {
     }|null
   reservations: UserBookingItem[]
   reservationId: string,
-  rating: Number,
+  rating: number,
   comment: string
   }
     

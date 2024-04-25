@@ -22,9 +22,9 @@ export default function Review() {
 
     const user = session?.user
     const name = urlParams.get('name')
-    const h = urlParams.get('hasReview')
-    console.log(rid);
-    console.log(name);
+    // const h = urlParams.get('hasReview')
+    console.log("rid is " + rid);
+    console.log("name is "+name);
 
     const router = useRouter();
     const [hasReviewed, setHasReviewed] = useState(false)
@@ -40,7 +40,7 @@ export default function Review() {
             console.log(item)
 
             const creatingReview = await postReview(session.user.token, item);
-            console.log("Review result:", creatingReview);
+            console.log("Review result: ", creatingReview);
             if (creatingReview.success == true) {
                 setHasReviewed(true)
                 router.refresh()
