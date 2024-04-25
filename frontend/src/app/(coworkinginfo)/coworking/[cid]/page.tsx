@@ -9,9 +9,13 @@ import getAllReviewsByCoworkingId from "@/libs/getReviewsByCoworkingId";
 
 export default async function CoworkingDetailPage({params}:{params:{cid:string}}){
    const session = await getServerSession(authOptions)
+   if (!session || !session.user.token) return null
    const coworkingDetail = await getCoworking(params.cid)
-   const token = session?.user?.token ?? '';
-   const reviews = await getAllReviewsByCoworkingId(token, params.cid);
+   // const token = session?.user?.token ?? '';
+   
+   console.log(session.user.token);
+   const reviews = await getAllReviewsByCoworkingId(session.user.token, params.cid);
+   console.log(reviews);
 
    
    console.log(params.cid)

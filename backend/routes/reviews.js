@@ -17,6 +17,8 @@ router
   .route("/")
   .post(protect, authorize("user", "admin", "banned user"), addReview)
   .get(protect, authorize("user", "admin"), getReview)
+  router
+  .route("/all")
   .get(protect, getReviewsByCoworking);
   router
   .route("/:id")

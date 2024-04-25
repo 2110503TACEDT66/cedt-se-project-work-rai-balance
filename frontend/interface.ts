@@ -139,6 +139,12 @@ export interface ReviewJson {
   data: ReviewItem2[]
 }
 
+export interface ReviewJsonCoworking {
+  success: boolean,
+  count: number,
+  data: ReviewItemCoworking[]
+}
+
 export interface ReviewItem2 {
   data: {
     coworking: {
@@ -165,4 +171,15 @@ export interface ReviewItemEdit {
   
   rating: Number,
   comment: string
+}
+
+export interface ReviewItemCoworking{
+  _id: string,
+  coworking : string,
+  reservation : string,
+  user : string,
+  approval : string,
+  rating : Number,
+  comment : string,
+  createAt: string
 }
