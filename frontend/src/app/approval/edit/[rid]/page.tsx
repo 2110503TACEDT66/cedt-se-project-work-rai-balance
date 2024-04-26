@@ -28,14 +28,15 @@ import approve from "@/libs/approval";
 export default function ApproveReview({params}:{params:{rid:string}}) {
     const { data: session } = useSession();
     if (!session || !session.user.token) return null;
-  
-    const [approval, setApproval] = useState("");
-  
+    
     const approveReviews = async () => {    
-      const editing = await editApprove(session.user.token, params.rid, approval);
-      console.log("Booking result:", editing);
+        console.log(session.user.token)
+        console.log(params.rid)
+        
+      const editing = await editApprove(session.user.token, params.rid, "approved");
+      console.log("Edit result:", editing);
       if (editing.success === true) {
-        // Do something if editing is successful
+        
       } else if (editing.success === false) {
         alert(editing.message);
       }
@@ -43,21 +44,7 @@ export default function ApproveReview({params}:{params:{rid:string}}) {
   
     return (
       <main>
-        <form className="border-2 mb-10 w-[100%] rounded-lg p-5">
-          <TextField
-            className="m-5 p-10 py-5 w-[100%]"
-            variant="standard"
-            margin="normal"
-            fullWidth
-            id="comment"
-            name="comment"
-            value={approval}
-            placeholder="Write this"
-            onChange={(e) => {
-              setApproval(e.target.value);
-            }}
-          />
-        </form>
+        
         <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]"
           onClick={approveReviews}
         >

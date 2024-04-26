@@ -7,7 +7,7 @@ export default async function editApprove(token: string, reviewId:string,approva
        headers: {
          "Content-type":"application/json",
          authorization: `Bearer ${token}`,
-       },body: JSON.stringify(approval)
+       },body: JSON.stringify({approval})
     })
     
     if(!response.ok){
