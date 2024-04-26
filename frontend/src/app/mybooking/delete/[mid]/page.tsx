@@ -11,8 +11,8 @@ export default async function DeleteBookingPage({params}:{params:{mid:string}}) 
     const deletedBookings = await deleteBooking(session.user.token, params.mid)
     console.log("result:", deletedBookings)
     
-    if(deletedBookings.succes == false){
-        alert(deletedBookings .message)
+    if(deletedBookings.success == false){
+        alert(deletedBookings.message)
     }
 
     return (

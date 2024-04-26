@@ -18,7 +18,6 @@ export default function EditProfileUser({params}:{params:{uid:string}}) {
     name: "",
     email: "",
     telephone: "",
-    
   });
 
   const editProfile = async (e: FormEvent) => {

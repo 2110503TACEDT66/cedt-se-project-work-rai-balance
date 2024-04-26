@@ -167,8 +167,7 @@ export interface ReviewItem {
   comment: string
 }
 
-export interface ReviewItemEdit {
-  
+export interface ReviewItemEdit { 
   rating: Number,
   comment: string
 }
@@ -183,3 +182,13 @@ export interface ReviewItemCoworking{
   comment : string,
   createAt: string
 }
+
+export interface ApproveReviewEdit {
+  approval: string
+}
+
+// export interface PendingReviewJson{
+//   success: boolean,
+//   count: number,
+//   data: ReviewItemCoworking[]
+// }
