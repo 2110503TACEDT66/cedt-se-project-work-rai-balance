@@ -1,21 +1,26 @@
-// app/approval/page.tsx
-import { GetServerSideProps } from 'next';
-import { getSession } from "next-auth/react"
-import AllApproval from '@/components/AllApproval';
-import { ApproveJson } from 'interface';
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import approve from '@/libs/approval';
-import { ApproveItem } from 'interface';
+import Link from "next/link";
 
-export default async function ApprovalPage({ approvesItem }: { approvesItem: ApproveItem }) {
-    const session = await getServerSession(authOptions)
-    if (!session || !session.user.token) return null
-
-    const approves = approve(session.user.token,approvesItem,"pending")
-    return(
+export default function Approval() {
+    return (
         <main>
-            <AllApproval approvesJson={approves}/>
+            <div className="flex flex-row">
+                <div className="border-2 m-10 p-10 w-1/3 bg-white">
+                    <Link href={'#'}>
+                        <button>Go to approve list</button>
+                    </Link>
+                </div>
+                <div className="border-2 m-10 p-10 w-1/3 bg-white">
+                    <Link href={'approval/pending'}>
+                        <button>Go to pending list</button>
+                    </Link>
+                </div>
+                <div className="border-2 m-10 p-10 w-1/3 bg-white">
+                    <Link href={'approval/disapprove'}>
+                        <button>Go to disapprove list</button>
+                    </Link>
+                </div>
+            </div>
+            
         </main>
     )
-};
+}
