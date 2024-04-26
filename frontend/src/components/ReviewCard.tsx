@@ -1,25 +1,35 @@
 "use client";
-
-import InteractiveCard from "./InteractiveCard";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
 
 export default function ReviewCard({
   rating,
   description,
+  userid,
+  createdAt
 }: {
   rating:number,
-  description:string
+  description:string,
+  userid:string,
+  createdAt:string
 }) {
-  return (
-    // <div>
-    //     this
-    // </div>
-    <InteractiveCard contentName={description}>
-        <div className="w-full h-[70%] relative rounded-t-lg bg-white mt-5">
-        {rating}
-      </div>
-      <div className="w-full h-[30%] p-[10px] font-bold">{description}</div>
-    </InteractiveCard>
-        
 
-        );
+  const [value, setValue] = React.useState<number | null>(2);
+
+  return (
+    <div className="border-b-2 m-[25px]">
+      <div className='font-semibold mb-[5px]'>
+        User ID : {userid}
+      </div>
+      
+      <Rating name="read-only" value={rating} readOnly className='mb-[15px]'/>
+      
+      <div className="font-semibold mb-[5px]">
+        Comment : {description}
+      </div>
+      {createdAt}
+    </div>
+    );
 }
