@@ -166,3 +166,25 @@ export interface ReviewItemEdit {
   rating: Number,
   comment: string
 }
+
+export interface ApproveItemEdit {
+  approval:string
+}
+
+export interface ApproveItem{
+  _id:string,
+  coworking:string,
+  reservation:string,
+  user:string,
+  approval:string,
+  rating:number,
+  comment:string,
+  createdAt:string,
+  __v:number
+}
+
+export interface ApproveJson{
+  success: boolean,
+  count: number,
+  data: ApproveItem[]
+}

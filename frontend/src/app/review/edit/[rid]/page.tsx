@@ -1,6 +1,5 @@
-"use client";
+"use client"
 import Link from "next/link";
-
 import editReview from "@/libs/editReview";
 import { ReviewItemEdit } from "../../../../../interface";
 import { useRouter, useSearchParams } from "next/navigation";
