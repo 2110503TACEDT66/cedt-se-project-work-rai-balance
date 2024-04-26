@@ -1,10 +1,10 @@
-'use client'
+
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import deleteBooking from "@/libs/deleteBooking";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import editApprove from "@/libs/editApprove";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -19,37 +19,35 @@ import { addBooking } from "@/redux/features/bookingSlice";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { BookingItemEdit } from "../../../../../interface";
+import { BookingItemEdit, ReviewItemCoworking } from "../../../../../interface";
 import editBooking from "@/libs/editBooking";
 import approve from "@/libs/approval";
+import getOneReview from "@/libs/getOneReview";
 
 
-
-export default function ApproveReview({params}:{params:{rid:string}}) {
-    const { data: session } = useSession();
-    if (!session || !session.user.token) return null;
-    
-    const approveReviews = async () => {    
-        console.log(session.user.token)
-        console.log(params.rid)
-        
-      const editing = await editApprove(session.user.token, params.rid, "approved");
-      console.log("Edit result:", editing);
-      if (editing.success === true) {
-        
-      } else if (editing.success === false) {
-        alert(editing.message);
-      }
-    };
+export default async function ApproveReview({params}:{params:{rid:string}}) {
+  const session = await getServerSession(authOptions)
+  if (!session || !session.user.token) return null
   
+  const approveReview = await editApprove(session.user.token, params.rid, "approved")
+  console.log("result:", approveReview)
+  
+  if(approveReview.succes == false){
+      alert(approveReview.message)
+  }
+
     return (
       <main>
-        
-        <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]"
-          onClick={approveReviews}
-        >
-          Submit
-        </button>
+        <div className="bg-white p-5 rounded-3xl drop-shadow-xl w-auto">     
+                <div className="text-xl text-center text-gray-600 m-5 p-5">Approve Successfully</div>
+        </div>
+        <div className="flex justify-center items-center">
+            <Link href={'#'}>
+                <button className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
+                Back
+                </button>
+            </Link>
+        </div>
       </main>
     );
 }

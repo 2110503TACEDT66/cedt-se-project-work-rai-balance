@@ -1,7 +1,7 @@
 import { ReviewItem } from "../../interface"
 import { ApproveItem } from "../../interface"
 
-export default async function approve(token: string, approveItem:ApproveItem){
+export default async function approve(token: string, approveItem:ApproveItem, status:string){
    
     const response = await fetch(`${process.env.BACKEND_URL}/api/project/reviews/all`,{
        method: "POST",
@@ -10,7 +10,7 @@ export default async function approve(token: string, approveItem:ApproveItem){
             authorization: `Bearer ${token}`,
        },
        body: JSON.stringify({
-        approval: "pending"
+        approval: status
      }),
     })
     
