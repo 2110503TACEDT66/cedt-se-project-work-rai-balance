@@ -188,3 +188,20 @@ export interface ApproveJson{
   count: number,
   data: ApproveItem[]
 }
+
+export interface ReviewItemCoworking{
+  _id: string,
+  coworking : string,
+  reservation : string,
+  user : string,
+  approval : string,
+  rating : Number,
+  comment : string,
+  createAt: string
+}
+
+export interface ReviewJsonCoworking {
+  success: boolean,
+  count: number,
+  data: ReviewItemCoworking[]
+}
