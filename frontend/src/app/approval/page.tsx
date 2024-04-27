@@ -10,7 +10,7 @@ export default function Approval() {
         return (
             <main className="items-center">
                 <div className="text-red-500 text-3xl font-bold text-center m-10">
-                    Not authorized
+                    Not authorized 
                 </div>
                 <Link href={'/'} className="">
                     <button className="mx-[46%] p-3 border-2 bg-white text-center text-2xl font-semibold">Go back</button>
