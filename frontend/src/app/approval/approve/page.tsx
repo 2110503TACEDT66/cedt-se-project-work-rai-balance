@@ -8,7 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import approve from '@/libs/approval';
 import { ApproveItem } from 'interface';
 
-export default async function DisapprovalPage({ approvesItem }: { approvesItem: ApproveItem }) {
+export default async function ApprovalPage({ approvesItem }: { approvesItem: ApproveItem }) {
     const session = await getServerSession(authOptions)
     if (!session || !session.user.token) return null
 

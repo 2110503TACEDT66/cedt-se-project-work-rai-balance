@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import editReviewStatus from "@/libs/editReviewStatus";
 import { useState } from "react";
-import { ApproveReviewEdit } from "interface";
+// import { ApproveReviewEdit } from "interface";
 
 export default async function ApproveReview({params}:{params:{rid:string}}) {
     const session = await getServerSession(authOptions)
