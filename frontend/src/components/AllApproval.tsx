@@ -16,7 +16,7 @@ export default async function AllApproval({
   
     return (
       <>
-        <div className="text-[30px] font-bold text-center mt-10">
+        <div className="text-[30px] font-bold text-center pt-10">
           {approvesJsonReady.count} Reviews
         </div>
         <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">

@@ -3,6 +3,9 @@
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import { ApproveItemEdit } from "interface";
+import approve from "@/libs/approval";
+import AllApproval from "@/components/AllApproval";
 
 export default async function Approval() {
     
@@ -21,32 +24,60 @@ export default async function Approval() {
         );
     }
 
+    const item: ApproveItemEdit = {
+        approval : ""
+    }
+
+    const approves = await approve(session.user.token,item,"")
+    console.log(approves);
 
     return (
         <main>
-            <div className="flex flex-col">
-                <div className="h-24 mt-20">       
-                    <Link href={'approval/approve'} className="">
-                        <button className="h-full bg-black text-left font-semibold font-sans w-3/4 text-white text-9xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#000000] hover:to-[#21D375]">Approve </button>
+            <div className="flex flex-row z-10 justify-center">
+                <div className="bg-white h-20 mt-4 px-5 hover:bg-slate-200">       
+                    <Link href={'/approval'} className="">
+                        <div className="text-xl font-semibold p-5">
+                        All
+                        </div>
+                        {/* <button className="h-full bg-black text-left font-semibold font-sans w-3/4 text-white text-9xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#000000] hover:to-[#21D375]">Approve </button> */}
                     </Link>
                 </div>
-                <div className="h-24 mt-20">
+                <div className="bg-white h-20 mt-4 px-5 hover:bg-slate-200">       
+                    <Link href={'approval/approve'} className="">
+                        <div className="text-xl font-semibold p-5">
+                        Approve
+                        </div>
+                        {/* <button className="h-full bg-black text-left font-semibold font-sans w-3/4 text-white text-9xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#000000] hover:to-[#21D375]">Approve </button> */}
+                    </Link>
+                </div>
+                <div className="bg-white h-20 mt-4 px-5 hover:bg-slate-200">
                     <Link href={'approval/pending'} className="">
-                        <button className="h-full bg-black text-left font-semibold font-sans w-3/4 text-white text-9xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#000000] hover:to-[#F4C430]">Pending </button>
+                        <div className="text-xl font-semibold p-5">
+                        Pending
+                        </div>
+                        
                     </Link>
                 </div>
                 
-                <div className="h-24 mt-20">
+                <div className="bg-white h-20 mt-4 hover:bg-slate-200">
                     <Link href={'approval/disapprove'} className="">
-                        <button className="h-full bg-black text-left font-semibold font-sans w-3/4 text-white text-9xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#000000] hover:to-[#FB3B1E]">Disapprove </button>
+                        <div className="text-xl font-semibold p-5">
+                            Disapprove
+                        </div>
+                        
                     </Link>
                 </div>
+                
                 {/* <div>
                     <Link href={'approval/disapprove'} className=" w-1/4">
                         <button className="m-2 px-[200px] text-center rounded-2xl text-2xl font-semibold bg-rose-400">Disapprove list</button>
                     </Link>
                 </div> */}
                 
+            </div>
+            <hr />
+            <div className="bg-white ">
+                <AllApproval approvesJson={approves}/>
             </div>
         </main>
     );
