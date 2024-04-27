@@ -9,6 +9,7 @@ export default async function Profile() {
 
     const profile = await getUserProfile(session.user.token)
     var createdAt = new Date(profile.data.createdAt)
+    const formattedCreatedAt = createdAt.toLocaleDateString()
 
     return (
         <main>
@@ -20,7 +21,7 @@ export default async function Profile() {
                             <tbody >
                                 <tr><td>Email</td><td>{'    '}</td><td>{profile.data.email}</td></tr>
                                 <tr><td>Tel.</td><td>{'    '}</td><td>{profile.data.telephone}</td></tr>
-                                <tr><td>Member Since</td><td>{'    '}</td><td>{createdAt.toString()}</td></tr>
+                                <tr><td>Member Since</td><td>{'    '}</td><td>{formattedCreatedAt}</td></tr>
                                 <tr><td>Point</td><td>{'    '}</td><td>{profile.data.currentPoint}</td></tr>
                             </tbody>
                         </table>

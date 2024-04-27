@@ -316,7 +316,7 @@ exports.getReviews = async (req, res, next) => {
   try {
     let query;
     if (!req.body.approval) {
-      query = Review.find();
+      query = Review.find().sort({approval: -1});
     } else if (req.body.approval == "pending") {
       query = Review.find({approval: "pending"});
     } else if (req.body.approval == "approved") {

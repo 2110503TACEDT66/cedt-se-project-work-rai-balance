@@ -34,8 +34,9 @@ export default async function AllUsers({
               <div className="text-[20px] font-lg"> Email: {UserItem.email}
                 <div className="text-md mt-2">Name: {UserItem.name}</div>
                 <div className="text-md mt-2">Telephone: {UserItem.telephone}</div>
-                <div className="text-md mt-2">reservationCount: {UserItem.reservationCount}</div>
-                <div className="text-md mt-2">reviewWithoutApproval: {UserItem.reviewWithoutApproval}</div>
+                <div className="text-md mt-2">Point: {UserItem.currentPoint}</div>
+                <div className="text-md mt-2">Number of Reservations: {UserItem.reservationCount}</div>
+                <div className="text-md mt-2">Chances to Review: {UserItem.reviewWithoutApproval}</div>
               </div>
               
               {
@@ -53,7 +54,7 @@ export default async function AllUsers({
                     </Link>
                   :
                   UserItem.role === 'banned user' ?
-                    <Link href={`allusers/unban/${UserItem._id}`}>
+                    <Link href={`allusers/ban/${UserItem._id}`}>
                       <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">
                         Unban
                       </button>

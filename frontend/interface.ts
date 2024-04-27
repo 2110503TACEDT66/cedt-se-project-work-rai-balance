@@ -113,6 +113,24 @@ export interface UserBookingItem {
   __v: string
 }
 
+export interface UserBookingItem2 {
+  _id: string
+  apptDate: string
+  user: string
+  coworking: string
+  start: string
+  end: string
+  createAt: string
+  reviews: ReviewItem4[]
+  __v: string
+}
+export interface ReviewItem4{
+  _id: string
+  rating:number
+  comment:string
+  approval: string
+}
+
 export interface UserJson {
   success: boolean,
   count: number,

@@ -40,7 +40,7 @@ export default async function AllHistory({
                 Current Point {HistoryItem.updatedPoint.toString()}
               </div>
               <div className="text-[15px] font-semibold">
-                Updated At {(new Date(HistoryItem.updatedAt)).toString()}
+                Updated At {(new Date(HistoryItem.updatedAt)).toLocaleString()}
               </div>
             </div>
           ))}
