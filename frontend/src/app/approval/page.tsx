@@ -1,26 +1,39 @@
-import Link from "next/link"
-import { BookingItem2, BookingJson } from "../../../interface"
-import AllBooking from "@/components/AllBooking"
-import getBookings from "@/libs/getBookings"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import getReviewForReservation from "@/libs/getReviewforReservation"
-import deleteBooking from "@/libs/deleteBooking";
-import { useRouter } from 'next/navigation';
-import { useSession } from "next-auth/react"
-import getPendingReviews from "@/libs/getPendingReviews"
-import AllPending from "@/components/AllPending"
+'use client'
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
-export default async function PendingPage() {
-    const session = await getServerSession(authOptions)
-    if (!session || !session.user.token) return null
+export default function Approval() {
 
-    const pendings = getPendingReviews(session.user.token, "pending");
-    
+    const {data: session} = useSession();
+    if (session?.user.role==='user') {
+        
+        return (
+            <main className="items-center">
+                <div className="text-red-500 text-3xl font-bold text-center m-10">
+                    Not authorized 
+                </div>
+                <Link href={'/'} className="">
+                    <button className="mx-[46%] p-3 border-2 bg-white text-center text-2xl font-semibold">Go back</button>
+                </Link>
+            </main>
+            
+        )
+    }
 
     return (
         <main>
-            <AllPending reviewJsonCoworking={pendings}/>
+            <div className="flex flex-row">
+                    <Link href={'approval/approve'} className=" w-1/3">
+                        <button className="border-2 p-[200px] text-center text-2xl font-semibold bg-emerald-300 shadow-xl">Approve list</button>
+                    </Link>
+                    <Link href={'approval/pending'} className=" w-1/3">
+                        <button className="border-2 p-[200px] text-center text-2xl font-semibold bg-amber-300 shadow-xl">Pending list</button>
+                    </Link>
+                    <Link href={'approval/disapprove'} className=" w-1/3">
+                        <button className="border-2 p-[200px] text-center text-2xl font-semibold bg-rose-400 shadow-xl">Disapprove list</button>
+                    </Link>
+            </div>
+            
         </main>
     )
 }

@@ -20,8 +20,8 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
    
    console.log(params.cid)
    return(
-      <main className="p-5">
-         <div className="bg-white flex min-h-full w-auto flex-1 flex-wrap justify-center rounded-3xl px-16 py-12 md:px-15 md:mx-20 relative ">
+      <main className="p-5 ">
+         <div className="bg-white flex min-h-full w-auto flex-1 flex-wrap justify-center rounded-t-3xl px-16 py-12 md:px-15 md:mx-20 relative shadow-xl">
             <h1 className="text-3xl text-center font-bold text-[#252645] mb-4">{coworkingDetail.data.name}</h1>
             
          
@@ -45,7 +45,7 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                   </table>   
                      
             </div>
-            <div className="px-5 my-2">
+            <div className="px-5 my-2 items-center">
                   {session?
                      <Link href={`/booking?id=${params.cid}&name=${coworkingDetail.data.name}`}>
                         <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Make Reservation</button>
@@ -55,8 +55,12 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                   }
             </div>
          </div>
+         <div className="bg-white rounded-b-3xl px-16 py-12 md:px-15 md:mx-20 relative shadow-xl mb-[100px]">
+            
+            <AllReviews reviewJson={reviews}/>
+         </div>
          
-         <AllReviews reviewJson={reviews}/>
+         
              
       </main>
    )

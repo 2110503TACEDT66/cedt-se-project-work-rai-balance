@@ -172,6 +172,28 @@ export interface ReviewItemEdit {
   comment: string
 }
 
+export interface ApproveItemEdit {
+  approval:string
+}
+
+export interface ApproveItem{
+  _id:string,
+  coworking:string,
+  reservation:string,
+  user:string,
+  approval:string,
+  rating:number,
+  comment:string,
+  createdAt:string,
+  __v:number
+}
+
+export interface ApproveJson{
+  success: boolean,
+  count: number,
+  data: ApproveItem[]
+}
+
 export interface ReviewItemCoworking{
   _id: string,
   coworking : string,
@@ -183,12 +205,8 @@ export interface ReviewItemCoworking{
   createAt: string
 }
 
-export interface ApproveReviewEdit {
-  approval: string
+export interface ReviewJsonCoworking {
+  success: boolean,
+  count: number,
+  data: ReviewItemCoworking[]
 }
-
-// export interface PendingReviewJson{
-//   success: boolean,
-//   count: number,
-//   data: ReviewItemCoworking[]
-// }

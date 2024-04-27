@@ -12,10 +12,15 @@ export default async function AllReviews({
     return (
         <>
             <div className="">
+                <div className="font-bold text-2xl">
+                Reviews
+                </div><br />
                 {reviewJsonReady.data.map((reviewItem2: ReviewItemCoworking) => (
                     <ReviewCard
+                        userid={reviewItem2.user}
                         rating={reviewItem2.rating.valueOf()}
                         description={reviewItem2.comment}
+                        createdAt={reviewItem2.createAt}
                         key={reviewItem2._id}
                     />
                 ))}
