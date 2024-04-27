@@ -110,6 +110,7 @@ export interface UserBookingItem {
   start: string
   end: string
   createAt: string
+  hasReview : string
   __v: string
 }
 

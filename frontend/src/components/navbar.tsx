@@ -63,11 +63,11 @@ export default function Navbar() {
                 <Link href={'/mybooking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>My Bookings</Link>
                 <Link href={`/pointHistory/${session?.user._id}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Point History</Link>
                 {
-                  session?.user?.role == 'admin' ? <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
-                    : null
-                }
-                {
-                  session?.user?.role == 'admin' ? <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
+                  session?.user?.role == 'admin' ? 
+                  <div>
+                    <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
+                    <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
+                  </div>
                     : null
                 }
 
@@ -100,6 +100,16 @@ export default function Navbar() {
             <Link href={'/coworking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Coworking</Link>
             <Link href={'/about'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>About us</Link>
             {
+                  
+                  session?.user?.role == 'admin' ? (
+                    <div>
+                      <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
+                      <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
+                    </div>
+                  )
+                    : null
+            }
+            {
               session ?
                 <div>
                   <Link href={`/pointHistory/${session?.user._id}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Point History</Link>
@@ -110,6 +120,7 @@ export default function Navbar() {
 
                 : <Link href={'/login'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-b-md" onClick={toggleMenu}>Login</Link>
             }
+             
           </div>
         </div>
       ) : null}
