@@ -190,30 +190,56 @@ exports.approveReview = async (req, res, next) => {
       });
     }
 
-    review = await Review.findByIdAndUpdate(req.params.id, {approval: req.body.approval}, {
-      new: true,
-      runValidators: true,
-    });
-
-    const reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
-      new: true,
-      runValidators: true,
-    });
-
-    const user = await User.findById(review.user);
-
-    if (req.body.approval == "approved") {
-      const point = await Point.create({
-        user: user,
-        updatedPoint: user.currentPoint+2,
-        change: "Add 2",
-        message: "Your review has been approved"
-      })
-  
-      const user1 = await User.findByIdAndUpdate(user, {currentPoint: point.updatedPoint}, {
+    if (review.approval == "pending" || review.approval == "disapproved") {
+      review = await Review.findByIdAndUpdate(req.params.id, {approval: req.body.approval}, {
         new: true,
         runValidators: true,
       });
+  
+      const reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
+        new: true,
+        runValidators: true,
+      });
+  
+      const user = await User.findById(review.user);
+  
+      if (req.body.approval == "approved") {
+        const point = await Point.create({
+          user: user,
+          updatedPoint: user.currentPoint+2,
+          change: "Add 2",
+          message: "Your review has been approved"
+        })
+    
+        const user1 = await User.findByIdAndUpdate(user, {currentPoint: point.updatedPoint}, {
+          new: true,
+          runValidators: true,
+        });
+      }
+    } else if (review.approval == "approved" && req.body.approval == "disapproved") {
+      review = await Review.findByIdAndUpdate(req.params.id, {approval: req.body.approval}, {
+        new: true,
+        runValidators: true,
+      });
+  
+      const reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
+        new: true,
+        runValidators: true,
+      });
+  
+      const user = await User.findById(review.user);
+  
+        const point = await Point.create({
+          user: user,
+          updatedPoint: user.currentPoint-2,
+          change: "Deduct 2",
+          message: "Your review has been changed from approved to disapproved"
+        })
+    
+        const user1 = await User.findByIdAndUpdate(user, {currentPoint: point.updatedPoint}, {
+          new: true,
+          runValidators: true,
+        });
     }
 
     res.status(200).json({
