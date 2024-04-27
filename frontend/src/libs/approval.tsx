@@ -1,7 +1,7 @@
-import { ReviewItem } from "../../interface"
+import { ApproveItemEdit, ReviewItem } from "../../interface"
 import { ApproveItem } from "../../interface"
 
-export default async function approve(token: string, approveItem:ApproveItem, status:string){
+export default async function approve(token: string, approveItem:ApproveItemEdit, status:string){
    
     const response = await fetch(`${process.env.BACKEND_URL}/api/project/reviews/all`,{
        method: "POST",
