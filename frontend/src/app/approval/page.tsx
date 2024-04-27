@@ -4,21 +4,21 @@ import Link from "next/link";
 
 export default function Approval() {
 
-    // const {data: session} = useSession();
-    // if (session?.user.role==='user') {
+    const {data: session} = useSession();
+    if (session?.user.role==='user') {
         
-    //     return (
-    //         <main className="items-center">
-    //             <div className="text-red-500 text-3xl font-bold text-center m-10">
-    //                 Not authorized 
-    //             </div>
-    //             <Link href={'/'} className="">
-    //                 <button className="mx-[46%] p-3 border-2 bg-white text-center text-2xl font-semibold">Go back</button>
-    //             </Link>
-    //         </main>
+        return (
+            <main className="items-center">
+                <div className="text-red-500 text-3xl font-bold text-center m-10">
+                    Not authorized 
+                </div>
+                <Link href={'/'} className="">
+                    <button className="mx-[46%] p-3 border-2 bg-white text-center text-2xl font-semibold">Go back</button>
+                </Link>
+            </main>
             
-    //     )
-    // }
+        )
+    }
 
     return (
         <main>

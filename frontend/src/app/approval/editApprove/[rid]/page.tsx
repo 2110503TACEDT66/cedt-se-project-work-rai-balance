@@ -42,9 +42,9 @@ export default async function ApproveReview({params}:{params:{rid:string}}) {
                 <div className="text-xl text-center text-gray-600 m-5 p-5">Approve Successfully</div>
         </div>
         <div className="flex justify-center items-center">
-            <Link href={'#'}>
+            <Link href={'/approval'}>
                 <button className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
-                Back
+                Back to Menu
                 </button>
             </Link>
         </div>
