@@ -204,9 +204,3 @@ export interface ReviewItemCoworking{
   comment : string,
   createAt: string
 }
-
-export interface ReviewJsonCoworking {
-  success: boolean,
-  count: number,
-  data: ReviewItemCoworking[]
-}
