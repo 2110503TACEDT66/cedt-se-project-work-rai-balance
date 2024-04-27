@@ -22,10 +22,28 @@ export default async function AllApproval({
         <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">
             {approvesJsonReady.data.map((ApproveItem:ApproveItem)=>(
                 <div className="bg-white p-5 rounded-xl drop-shadow-xl w-auto m-3 ">
-                    Status : {ApproveItem.approval}
-                    <br/>
+                  {
+                    ApproveItem.approval == 'approved' ?(
+                      <div className="text-[20px] font-bold text-emerald-500">
+                        Status : {ApproveItem.approval}
+                      </div>
+                    ):ApproveItem.approval == 'pending' ?(
+                      <div className="text-[20px] font-bold text-yellow-500">
+                        Status : {ApproveItem.approval}
+                      </div>
+                    ):ApproveItem.approval == 'disapproved' ?(
+                      <div className="text-[20px] font-bold text-red-600">
+                        Status : {ApproveItem.approval}
+                      </div>
+                    ):null
+
+                  }
+                  
+                    {/* <br/> */}
                     Review ID : {ApproveItem._id}
                     <br/>
+                    {/* Rating : {ApproveItem.rating}
+                    <br/> */}
                     Comment : {ApproveItem.comment}
                     <br/>
                     Coworking-Space ID : {ApproveItem.coworking}
@@ -33,14 +51,32 @@ export default async function AllApproval({
                     User ID : {ApproveItem.user}
 
                     <br /><br />
-                    <div className="flex flex-row">
-                    <Link href={"/approval/editApprove/" + ApproveItem._id } >
-                      <button className="mx-5 m-auto rounded-md px-5 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Approve</button>
-                    </Link>
-                    <Link href={"/approval/editDisapprove/" + ApproveItem._id + `?id=${ApproveItem._id}&name=${ApproveItem.comment.toString()}`} >
-                      <button className="m-auto rounded-md px-5 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Disapprove</button>
-                    </Link>
-                    </div>
+                    {
+                      ApproveItem.approval == 'approved' ? (
+                        <div className="flex flex-row">
+                          <Link href={"/approval/editDisapprove/" + ApproveItem._id + `?id=${ApproveItem._id}&name=${ApproveItem.comment.toString()}`} >
+                            <button className="m-auto rounded-md px-5 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Disapprove</button>
+                          </Link>
+                        </div>
+                      ):ApproveItem.approval == 'pending' ?(
+                        <div className="flex flex-row">
+                          <Link href={"/approval/editApprove/" + ApproveItem._id } >
+                            <button className="mx-5 m-auto rounded-md px-5 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Approve</button>
+                          </Link>
+                          <Link href={"/approval/editDisapprove/" + ApproveItem._id + `?id=${ApproveItem._id}&name=${ApproveItem.comment.toString()}`} >
+                            <button className="m-auto rounded-md px-5 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Disapprove</button>
+                          </Link>
+                        </div>
+                      ):ApproveItem.approval == 'disapproved' ?(
+                        <div className="flex flex-row">
+                          <Link href={"/approval/editApprove/" + ApproveItem._id } >
+                            <button className="mx-5 m-auto rounded-md px-5 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Approve</button>
+                          </Link>
+                        </div>
+                      ):null
+
+                    }
+                    
                     
                 </div>
                 

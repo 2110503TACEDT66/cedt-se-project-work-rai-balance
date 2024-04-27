@@ -23,13 +23,13 @@ export default async function AllHistory({
                 
               </div>  
               {
-                HistoryItem.change=='-1' || HistoryItem.change == '-2' ?(
+                HistoryItem.change=='Deduct 1' || HistoryItem.change == 'Deduct 2' ?(
                   <div className="text-[15px] text-red-600 font-semibold">
-                    Point {HistoryItem.change}
+                    {HistoryItem.change} Point
                   </div>
                 ):(
                   <div className="text-[15px] text-teal-500 font-semibold">
-                    Point {HistoryItem.change}
+                    {HistoryItem.change} Point
                   </div>
                 )
 

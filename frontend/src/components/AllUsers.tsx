@@ -37,20 +37,31 @@ export default async function AllUsers({
                 <div className="text-md mt-2">reservationCount: {UserItem.reservationCount}</div>
                 <div className="text-md mt-2">reviewWithoutApproval: {UserItem.reviewWithoutApproval}</div>
               </div>
+              
               {
                 UserItem.reservations.map((UserBookingItem: UserBookingItem)=>
                 <div key={UserItem.email}>Reservation: {UserBookingItem.apptDate.split('T')[0]} from {UserBookingItem.start} to {UserBookingItem.end}</div>)
               }
               <div className="ml-5 flex flex-row">
-              {
-                UserItem.role=='user' && UserItem.currentPoint == 0 && UserItem.reviewWithoutApproval == 0 ?
-                <Link href={`allusers/ban/${UserItem._id}`}>
-                  <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">
-                    Ban
-                  </button>
-                </Link>:
+              
+                {
+                  UserItem.role === 'user' && UserItem.currentPoint === 0 && UserItem.reviewWithoutApproval === 0 ?
+                    <Link href={`allusers/ban/${UserItem._id}`}>
+                      <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">
+                        Ban
+                      </button>
+                    </Link>
+                  :
+                  UserItem.role === 'banned user' ?
+                    <Link href={`allusers/unban/${UserItem._id}`}>
+                      <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">
+                        Unban
+                      </button>
+                    </Link>
+                  :
                   null
-              }
+                }
+              
               
           </div>
             </div>
