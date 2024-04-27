@@ -4,21 +4,15 @@ export default function Approval() {
     return (
         <main>
             <div className="flex flex-row">
-                <div className="border-2 m-10 p-10 w-1/3 bg-white">
-                    <Link href={'#'}>
-                        <button>Go to approve list</button>
+                    <Link href={'approval/approve'} className=" w-1/3">
+                        <button className="border-2 p-[200px] bg-white text-center text-2xl font-semibold bg-emerald-300 shadow-xl">Approve list</button>
                     </Link>
-                </div>
-                <div className="border-2 m-10 p-10 w-1/3 bg-white">
-                    <Link href={'approval/pending'}>
-                        <button>Go to pending list</button>
+                    <Link href={'approval/pending'} className=" w-1/3">
+                        <button className="border-2 p-[200px] bg-white text-center text-2xl font-semibold bg-amber-300 shadow-xl">Pending list</button>
                     </Link>
-                </div>
-                <div className="border-2 m-10 p-10 w-1/3 bg-white">
-                    <Link href={'approval/disapprove'}>
-                        <button>Go to disapprove list</button>
+                    <Link href={'approval/disapprove'} className=" w-1/3">
+                        <button className="border-2 p-[200px] bg-white text-center text-2xl font-semibold bg-rose-400 shadow-xl">Disapprove list</button>
                     </Link>
-                </div>
             </div>
             
         </main>
