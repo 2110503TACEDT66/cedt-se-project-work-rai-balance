@@ -95,6 +95,8 @@ export interface UserItem {
   role: string
   createdAt: string
   currentPoint:number
+  reservationCount:number
+  reviewWithoutApproval:number
   __v: 0,
   reservations: UserBookingItem[]
   id: string

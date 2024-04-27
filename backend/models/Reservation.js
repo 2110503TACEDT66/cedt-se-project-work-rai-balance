@@ -32,6 +32,10 @@ const ReservationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 });
 
 ReservationSchema.pre(
@@ -45,4 +49,11 @@ ReservationSchema.pre(
   }
 );
 
+// Reverse populate with virtuals
+ReservationSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "reservation",
+  justOne: false,
+});
 module.exports = mongoose.model("Reservation", ReservationSchema);

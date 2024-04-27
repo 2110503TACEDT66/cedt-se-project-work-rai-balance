@@ -9,7 +9,8 @@ const {
   deleteMe,
   updateMe,
   banUser,
-  unbanUser
+  unbanUser,
+  getUser
 } = require("../controllers/auth");
 
 const router = express.Router();
@@ -29,5 +30,6 @@ router.delete("/deleteMe", protect, deleteMe);
 router.put("/updateMe", protect, updateMe);
 router.route("/:userId/ban").get(protect, authorize("admin"), banUser);
 router.route("/:userId/unban").get(protect, authorize("admin"), unbanUser);
+router.route("/:userId").get(protect, authorize("admin"), getUser);
 
 module.exports = router;

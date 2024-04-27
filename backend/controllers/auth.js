@@ -340,3 +340,26 @@ exports.unbanUser = async (req, res, next) => {
     data: updatedUser,
   });
 };
+
+//desc    Get user
+//route   GET /api/project/auth/:userId
+//access  Private
+exports.getUser = async (req, res, next) => {
+  const user = await User.findById(req.params.userId).populate({
+    path: "reservations",
+    populate: { path: "reviews" } // Populate reviews from each reservation
+  });
+  // console.log(user);
+
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: 'User not found',
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+};
