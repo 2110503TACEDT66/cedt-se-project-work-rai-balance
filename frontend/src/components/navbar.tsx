@@ -66,10 +66,10 @@ export default function Navbar() {
                   session?.user?.role == 'admin' ? <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
                     : null
                 }
-                {
+                {/* {
                   session?.user?.role == 'admin' ? <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
                     : null
-                }
+                } */}
 
                 <Link href={'/'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-md" onClick={() => signOut({ callbackUrl: '/' })}>Logout</Link>
               </div>
