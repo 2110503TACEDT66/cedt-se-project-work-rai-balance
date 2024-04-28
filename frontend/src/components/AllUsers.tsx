@@ -32,6 +32,7 @@ export default async function AllUsers({
           {usersJsonReady.data.map((UserItem: UserItem) => (
 
             <div className="bg-white p-5 rounded-xl drop-shadow-xl w-auto m-3" key={UserItem.email}>
+              
               <tbody>
                 <tr><td>Email:</td><td>{'    '}</td><td>{UserItem.email}</td></tr>
                 <tr><td>Name:</td><td>{'    '}</td><td>{UserItem.name}</td></tr>

@@ -9,7 +9,19 @@ import getAllReviewsByCoworkingId from "@/libs/getReviewsByCoworkingId";
 
 export default async function CoworkingDetailPage({params}:{params:{cid:string}}){
    const session = await getServerSession(authOptions)
-   if (!session || !session.user.token) return null
+   if (!session || !session.user.token) 
+      return (
+         <main className="flex flex-col items-center justify-center h-screen">
+            <p className="text-white text-lg text-center mb-4 text-5xl font-semibold drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">Please log in to view this content.</p><br /><br />
+            <Link href={`/login`}>
+               <button className="block px-4 py-2 text-lg font-semibold text-white bg-gradient-to-r from-[#252645] to-[#5C5EAB] rounded-md shadow-md hover:from-[#5C5EAB] hover:to-[#252645] transition duration-300 ease-in-out">
+                  Log in to make Reservation
+               </button>
+            </Link>
+         </main>
+
+         
+      )
    const coworkingDetail = await getCoworking(params.cid)
    // const token = session?.user?.token ?? '';
    
@@ -51,11 +63,10 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                   {session.user.role !== 'banned user'?
                      <Link href={`/booking?id=${params.cid}&name=${coworkingDetail.data.name}`}>
                         <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Make Reservation</button>
-                     </Link>:
-                     <p className="text-red-500">You are banned and cannot make reservations.</p>
+                     </Link>:<p className="text-red-500">You are banned and cannot make reservations.</p>
                   }
                      
-                     
+                     {session.user.role === 'banned user' && <p className="text-red-500">You are banned and cannot make reservations.</p>}
                   </> :
                   <Link href={`/login`}>
                      <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Log in to make Reservation</button>
