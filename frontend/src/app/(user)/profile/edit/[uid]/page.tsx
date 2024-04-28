@@ -34,6 +34,10 @@ export default function EditProfileUser({params}:{params:{uid:string}}) {
           item.email = data.email
         }
         if (data.telephone !== "") {
+          if (!/^\d+$/.test(data.telephone)) {
+            alert("Telephone number must contain only numbers.");
+            return;
+          }
           item.telephone = data.telephone
         }
       console.log(item)

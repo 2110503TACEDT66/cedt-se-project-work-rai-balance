@@ -31,6 +31,16 @@ export default function CreateUser() {
     const form = new FormData(e.target as HTMLFormElement);
     console.log(data.name);
     if (data.name && data.email && data.password && data.telephone) {
+      console.log(typeof data.telephone);
+      if (!/^\d+$/.test(data.telephone)) {
+        alert("Telephone number must contain only numbers.");
+        return;
+      }
+      if (data.password.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+
       const item: User = {
         name: data.name,
         email: data.email,
