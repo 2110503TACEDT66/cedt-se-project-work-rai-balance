@@ -22,7 +22,11 @@ export default async function Profile() {
                                 <tr><td>Email</td><td>{'    '}</td><td>{profile.data.email}</td></tr>
                                 <tr><td>Tel.</td><td>{'    '}</td><td>{profile.data.telephone}</td></tr>
                                 <tr><td>Member Since</td><td>{'    '}</td><td>{formattedCreatedAt}</td></tr>
-                                <tr><td>Point</td><td>{'    '}</td><td>{profile.data.currentPoint}</td></tr>
+                                {
+                                    profile.data.role == 'user'?<tr><td>Point</td><td>{'    '}</td><td>{profile.data.currentPoint}</td></tr>
+                                    :null
+                                }
+                                
                             </tbody>
                         </table>
                         <div className="ml-5">

@@ -29,7 +29,7 @@ export default async function ApprovalPage() {
                         {/* <button className="h-full bg-black text-left font-semibold font-sans w-3/4 text-white text-9xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#000000] hover:to-[#21D375]">Approve </button> */}
                     </Link>
                 </div>
-                <div className="bg-white h-20 mt-4 px-5 hover:bg-slate-200">       
+                <div className="bg-slate-200 h-20 mt-4 px-5 hover:bg-slate-200">       
                     <Link href={'/approval/approve'} className="">
                         <div className="text-xl font-semibold p-5">
                         Approve

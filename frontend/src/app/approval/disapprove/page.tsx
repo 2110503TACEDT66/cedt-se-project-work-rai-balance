@@ -48,7 +48,7 @@ export default async function DisapprovalPage() {
                     </Link>
                 </div>
                 
-                <div className="bg-white h-20 mt-4 hover:bg-slate-200">
+                <div className="bg-slate-200 h-20 mt-4 hover:bg-slate-200">
                     <Link href={'/approval/disapprove'} className="">
                         <div className="text-xl font-semibold p-5">
                             Disapprove

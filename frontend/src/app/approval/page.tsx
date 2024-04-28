@@ -34,7 +34,7 @@ export default async function Approval() {
     return (
         <main>
             <div className="flex flex-row z-10 justify-center">
-                <div className="bg-white h-20 mt-4 px-5 hover:bg-slate-200">       
+                <div className="bg-slate-200 h-20 mt-4 px-5 hover:bg-slate-200">       
                     <Link href={'/approval'} className="">
                         <div className="text-xl font-semibold p-5">
                         All
