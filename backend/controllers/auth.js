@@ -283,6 +283,13 @@ exports.banUser = async (req, res, next) => {
     });
   }
 
+  if (user.role == "banned user") {
+    return res.status(400).json({
+      success: false,
+      message: `This user has already been banned`,
+    });
+  }
+
   if (user.currentPoint > 0) {
     return res.status(400).json({
       success: false,
@@ -330,10 +337,29 @@ exports.unbanUser = async (req, res, next) => {
     });
   }
 
-  const updatedUser = await User.findByIdAndUpdate(req.params.userId, {role: "user"}, {
+  if (user.role == "user") {
+    return res.status(400).json({
+      success: false,
+      message: `This user is not banned`,
+    });
+  }
+
+  const point = await Point.create({
+    user: user._id,
+    updatedPoint: user.currentPoint+1,
+    change: "Add 1",
+    message: "You have been unbanned"
+  })
+
+  const updatedUser = await User.findByIdAndUpdate(user.id, {currentPoint: point.updatedPoint, role: "user"}, {
     new: true,
     runValidators: true,
   });
+
+  // const updatedUser = await User.findByIdAndUpdate(req.params.userId, {role: "user"}, {
+  //   new: true,
+  //   runValidators: true,
+  // });
   
   res.status(200).json({
     success: true,
