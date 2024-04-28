@@ -12,7 +12,7 @@ const {
  * @swagger
  * tags:
  *    name: Coworkings
- *    description: The coworkings managing API
+ *    description: API endpoints for managing coworking spaces
  */
 
 //add Coworking model
@@ -29,7 +29,7 @@ const {
  *        id:
  *          type: string
  *          format: uuid
- *          description: The auto-generated id of the coworking
+ *          description: The auto-generated ID of the coworking space
  *          example: d69021e1-6c54-4b01-90e6-d701748f0851
  *        ลําดับ:
  *          type: string
@@ -84,11 +84,11 @@ const {
  * @swagger
  * /coworkings:
  *   get:
- *     summary: Returns the list of all the coworkings
+ *     summary: Get all coworking spaces
  *     tags: [Coworkings]
  *     responses:
  *       200:
- *         description: The list of the coworkings
+ *         description: A list of coworking spaces
  *         content:
  *           application/json:
  *             schema:
@@ -102,7 +102,7 @@ const {
  * @swagger
  * /coworkings/{id}:
  *   get:
- *     summary: Get the coworking by id
+ *     summary: Get a coworking space by ID
  *     tags: [Coworkings]
  *     parameters:
  *       - in: path
@@ -110,16 +110,16 @@ const {
  *         schema:
  *           type: string
  *         required: true
- *         description: The coworking id
+ *         description: The ID of the coworking space
  *     responses:
  *       200:
- *         description: The coworking description by id
- *         contents:
+ *         description: The details of the coworking space
+ *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Coworking'
- *     404:
- *       description: The coworking was not found
+ *       404:
+ *         description: Coworking space not found
  */
 
 // add one coworking
@@ -127,7 +127,7 @@ const {
  * @swagger
  * /coworkings:
  *   post:
- *       summary: Create a new coworking
+ *       summary: Create a new coworking space
  *       tags: [Coworkings]
  *       requestBody:
  *           required: true
@@ -137,13 +137,13 @@ const {
  *                       $ref: '#/components/schemas/Coworking'
  *       responses:
  *           201:
- *               description: The coworking was successfully created
+ *               description: Coworking space created successfully
  *               content:
  *                   application/json:
  *                   schema:
  *                       $ref: '#/components/schemas/Coworking'
  *           500:
- *               description: Some server error
+ *               description: Server error
  */
 
 // update the coworking
@@ -151,7 +151,7 @@ const {
  * @swagger
  * /coworkings/{id}:
  *  put:
- *     summary: Update the coworking by the id
+ *     summary: Update a coworking space by ID
  *     tags: [Coworkings]
  *     parameters:
  *       - in: path
@@ -159,7 +159,7 @@ const {
  *         schema:
  *           type: string
  *         required: true
- *         description: The coworking id
+ *         description: The ID of the coworking space
  *     requestBody:
  *       required: true
  *       content:
@@ -168,22 +168,23 @@ const {
  *              $ref: '#/components/schemas/Coworking'
  *     responses:
  *       200:
- *         description: The coworking was updated
+ *         description: Coworking space updated successfully
  *         content:
  *           application/json:
  *              schema:
  *                $ref: '#/components/schemas/Coworking'
  *       404:
- *         description: The coworking was not found
+ *         description: Coworking space not found
  *       500:
- *         description: Some error happened
+ *         description: Server error
  */
 
+// delete one coworking
 /**
  * @swagger
  * /coworkings/{id}:
  *   delete:
- *     summary: Remove the coworking by id
+ *     summary: Delete a coworking space by ID
  *     tags: [Coworkings]
  *     parameters:
  *       - in: path
@@ -191,13 +192,13 @@ const {
  *         schema:
  *           type: string
  *         required: true
- *         description: The coworking id
+ *         description: The ID of the coworking space
  *
  *     responses:
  *       200:
- *         description: The coworking was deleted
+ *         description: Coworking space deleted successfully
  *       404:
- *         description: The coworking was not found
+ *         description: Coworking space not found
  */
 
 //Include other resource routers

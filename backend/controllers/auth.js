@@ -316,7 +316,7 @@ exports.banUser = async (req, res, next) => {
   });
 };
 
-//desc    Unban user
+//desc    user
 //route   GET /api/project/auth/:userId/unban
 //access  Private
 exports.unbanUser = async (req, res, next) => {
