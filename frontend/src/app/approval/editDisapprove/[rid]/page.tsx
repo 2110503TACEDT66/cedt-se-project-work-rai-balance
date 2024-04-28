@@ -1,4 +1,4 @@
-
+'use client'
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import deleteBooking from "@/libs/deleteBooking";
@@ -25,28 +25,43 @@ import approve from "@/libs/approval";
 import getOneReview from "@/libs/getOneReview";
 
 
-export default async function ApproveReview({params}:{params:{rid:string}}) {
-  const session = await getServerSession(authOptions)
-  if (!session || !session.user.token) return null
-  
-  const approveReview = await editApprove(session.user.token, params.rid, "disapproved")
-  console.log("result:", approveReview)
-  
-  if(approveReview.succes == false){
-      alert(approveReview.message)
-  }
+export default function ApproveReview({params}:{params:{rid:string}}) {
+  const {data: session} = useSession()
+   if (!session || !session.user.token) return null
+   const router = useRouter();
+   const urlParams = useSearchParams()
+
+   const [hasApprove, setHasApprove] = useState(false)
+
+   const disapprove = async() => {
+        const disapproveReview = await editApprove(session.user.token, params.rid, "disapproved")
+        console.log("result:", disapproveReview)
+
+        if(disapproveReview.success == true){
+          setHasApprove(true)
+          router.replace("/approval")
+          router.refresh()
+      }else if(disapproveReview.success == false){
+          alert(disapproveReview.message)
+      }
+
+   }
 
     return (
       <main>
-        <div className="bg-white p-5 rounded-3xl drop-shadow-xl w-auto">     
+        <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">
+            <div className="bg-white p-5 rounded-3xl drop-shadow-xl w-auto">
+                
                 <div className="text-xl text-center text-gray-600 m-5 p-5">Disapprove Successfully</div>
-        </div>
-        <div className="flex justify-center items-center">
-            <Link href={'/approval'}>
-                <button className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
-                Back to Menu
-                </button>
-            </Link>
+
+            </div>
+          <div className="flex justify-center items-center">
+              {/* <Link href={'/approval'}> */}
+                  <button onClick={disapprove} className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
+                  Back to Menu
+                  </button>
+              {/* </Link> */}
+          </div>
         </div>
       </main>
     );
