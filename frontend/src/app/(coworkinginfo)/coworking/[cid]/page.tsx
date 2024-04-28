@@ -46,13 +46,21 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                      
             </div>
             <div className="px-5 my-2 items-center">
-                  {session?
+            {session ?
+                  <>
+                  {session.user.role !== 'banned user'?
                      <Link href={`/booking?id=${params.cid}&name=${coworkingDetail.data.name}`}>
                         <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Make Reservation</button>
-                     </Link>:<Link href={`/login`}>
-                        <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Log in to make Reservation</button>
-                     </Link>
+                     </Link>:
+                     <p className="text-red-500">You are banned and cannot make reservations.</p>
                   }
+                     
+                     
+                  </> :
+                  <Link href={`/login`}>
+                     <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Log in to make Reservation</button>
+                  </Link>
+               }
             </div>
          </div>
          <div className="bg-white rounded-b-3xl px-16 py-12 md:px-15 md:mx-20 relative shadow-xl mb-[100px]">
