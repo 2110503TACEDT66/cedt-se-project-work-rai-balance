@@ -22,23 +22,23 @@ export default function ConfirmUnban({params}:{params:{uid:string}}){
    const router = useRouter();
    const urlParams = useSearchParams()
 
-   const [hasBan, setHasBan] = useState(false)
+   const [hasUnban, setHasUnban] = useState(false)
 
   
    console.log(`ban ${session.user.token}`);
     
-   const ban = async() => {
+   const unban = async() => {
 
-      const banUser = await banUserById(session.user.token, params.uid)
+      const unbanUser = await unbanUserById(session.user.token, params.uid)
 
-      console.log("result:", banUser)
+      console.log("result:", unbanUser)
       
-      if(banUser.success == true){
-         setHasBan(true)
+      if(unbanUser.success == true){
+         setHasUnban(true)
          router.replace("/allusers")
          router.refresh()
-      }else if(banUser.success == false){
-         alert(banUser.message)
+      }else if(unbanUser.success == false){
+         alert(unbanUser.message)
       }
    }
     
@@ -49,12 +49,12 @@ export default function ConfirmUnban({params}:{params:{uid:string}}){
        <div className="flex min-h-full w-auto flex-1 flex-col justify-center rounded-3xl px-6 py-12 md:px-15 md:mx-20 lg:mx-[200px]">
             <div className="bg-white p-5 rounded-3xl drop-shadow-xl w-auto">
                 
-                <div className="text-xl text-center text-gray-600 m-5 p-5">You Have Successfully Ban</div>
+                <div className="text-xl text-center text-gray-600 m-5 p-5">You Have Successfully Unban</div>
 
         </div>
         <div className="flex justify-center items-center">
             {/* <Link href={'/allusers'}> */}
-                <button  onClick={ban} className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
+                <button  onClick={unban} className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
                   View All Users
                 </button>
             {/* </Link> */}

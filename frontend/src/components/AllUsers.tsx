@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { UserItem, UserJson, UserBookingItem } from "../../interface";
+import { UserItem, UserJson, UserBookingItem, UserBookingItem2 } from "../../interface";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import deleteBooking from "@/libs/deleteBooking";
@@ -10,7 +10,7 @@ export default async function AllUsers({
   usersJson: Promise<UserJson>;
 }) {
   const usersJsonReady = await usersJson;
-  
+  console.log(usersJsonReady);
 
   /*const session = await getServerSession(authOptions)
     if (!session || !session.user.token) return null
@@ -32,16 +32,25 @@ export default async function AllUsers({
           {usersJsonReady.data.map((UserItem: UserItem) => (
 
             <div className="bg-white p-5 rounded-xl drop-shadow-xl w-auto m-3" key={UserItem.email}>
+              <div className="text-xl font-bold mb-2">
+                {UserItem.name}
+              </div>
+              <hr />
+              <div className="text-md ">
+                Name : {UserItem.name}
+                <br />
+                Email : {UserItem.email}
+                <br />
+                Tel. : {UserItem.telephone}
+                <br />
+                Point : {UserItem.currentPoint}
+                <br />
+                Number of Reservations : {UserItem.reservationCount}
+                <br />
+                Chances to Review : {UserItem.reviewWithoutApproval}
+              </div>
               
-              <tbody>
-                <tr><td>Email:</td><td>{'    '}</td><td>{UserItem.email}</td></tr>
-                <tr><td>Name:</td><td>{'    '}</td><td>{UserItem.name}</td></tr>
-                <tr><td>Telephone:</td><td>{'    '}</td><td>{UserItem.telephone}</td></tr>
-                <tr><td>Point:</td><td>{'    '}</td><td>{UserItem.currentPoint}</td></tr>
-                <tr><td>Number of Reservations:</td><td>{'    '}</td><td> {UserItem.reservationCount}</td></tr>
-                <tr><td>Chances to Review:</td><td>{'    '}</td><td> {UserItem.reviewWithoutApproval}</td></tr>
-
-              </tbody>
+              
               {/* <div className="text-[20px] font-lg"> Email: {UserItem.email}
                 <div className="text-md mt-2">Name: {UserItem.name}</div>
                 <div className="text-md mt-2">Telephone: {UserItem.telephone}</div>
@@ -52,18 +61,39 @@ export default async function AllUsers({
               
               {
                 UserItem.reservations.map((UserBookingItem: UserBookingItem)=>
-                <div className="bg-slate-200 p-5 rounded-xl w-[80%] text-black ml-4 mt-2 mb-2" key={UserItem.email}>Reservation Date: {UserBookingItem.apptDate.split('T')[0]} 
+                <div className="bg-slate-200 p-5 rounded-xl text-black ml-5 mt-2 mb-2 mr-4  " key={UserItem.email}>Reservation Date: {UserBookingItem.apptDate.split('T')[0]} 
                 <br />from {UserBookingItem.start} to {UserBookingItem.end}
                 <br />
-                  <div className="flex flex-column">
-                    <div>
-                      Status : 
-                    </div>
-                    <div>
-                        {UserBookingItem.hasReview}
-                    </div>
+                  
+                    
+                        {
+                          UserBookingItem.hasReview == 'no'? null
+                          :
+                          <div className="flex flex-column">
+                            <div>
+                              Review Status :
+                            </div>
+                            {
+                              UserBookingItem.hasReview == 'pending'?
+                                  <div className="text-yellow-500">
+                                    Review is pending
+                                  </div>:
+                              UserBookingItem.hasReview == 'approved'?
+                                  <div className="text-emerald-500">
+                                    Review has been approved
+                                  </div>:
+                              UserBookingItem.hasReview == 'disapproved'?
+                                  <div className="text-red-600">
+                                    Review has been disapproved
+                                  </div>:
+                                  null
+
+                            }
+                            
+                          </div>
+                        }
                   </div>
-                </div>
+                
                 
                   )
               }
@@ -72,14 +102,14 @@ export default async function AllUsers({
                 {
                   UserItem.role === 'user' && UserItem.currentPoint === 0 && UserItem.reviewWithoutApproval === 0 ?
                     <Link href={`allusers/ban/${UserItem._id}`}>
-                      <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">
+                      <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-black hover:bg-red-600">
                         Ban
                       </button>
                     </Link>
                   :
                   UserItem.role === 'banned user' ?
                     <Link href={`allusers/ban/${UserItem._id}`}>
-                      <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">
+                      <button className="block m-auto rounded-md px-8 py-2 font-semibold text-white shadow-sm bg-black ">
                         Unban
                       </button>
                     </Link>

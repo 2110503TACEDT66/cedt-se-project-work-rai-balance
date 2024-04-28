@@ -9,7 +9,7 @@ export default async function banUserById(token:string,id:string){
    })
    
    if(!response.ok){
-      throw new Error("Cannot get user profile")
+      throw new Error("Cannot ban user profile")
    }
    return await response.json()
 }
