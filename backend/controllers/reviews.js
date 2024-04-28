@@ -228,10 +228,14 @@ exports.approveReview = async (req, res, next) => {
       });
   
       const user = await User.findById(review.user);
+      let userPoint = user.currentPoint-2;
+      if (userPoint < 0) {
+        userPoint = 0;
+      }
   
         const point = await Point.create({
           user: user,
-          updatedPoint: user.currentPoint-2,
+          updatedPoint: userPoint,
           change: "Deduct 2",
           message: "Your review has been changed from approved to disapproved"
         })
