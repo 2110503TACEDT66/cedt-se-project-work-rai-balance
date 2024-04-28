@@ -127,7 +127,7 @@ exports.addReservation = async (req, res, next) => {
     if (req.body.start.localeCompare(req.body.end) > 0) {
       return res.status(400).json({
         success: false,
-        message: `Please make valid reservation`,
+        message: `Please make valid reservation, start time cannot be after end time`,
       });
     }
 
@@ -223,7 +223,7 @@ exports.updateReservation = async (req, res, next) => {
     if (req.body.start.localeCompare(req.body.end) > 0) {
       return res.status(400).json({
         success: false,
-        message: `Please update valid reservation`,
+        message: `Please update valid reservation, start time cannot be after end time`,
       });
     }
 
