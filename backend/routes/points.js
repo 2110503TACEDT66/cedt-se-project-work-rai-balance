@@ -1,15 +1,11 @@
 const express = require("express");
-const {
-  getPointHistories
-} = require("../controllers/points");
+const { getPointHistories } = require("../controllers/points");
 
 const router = express.Router({ mergeParams: true });
 
 const { protect } = require("../middleware/auth");
 
-router
-  .route("/")
-  .get(protect, getPointHistories);
+router.route("/").get(protect, getPointHistories);
 // router
 //   .route("/:id")
 //   .get(protect, getPointHistory)
@@ -76,6 +72,13 @@ module.exports = router;
  *   get:
  *     summary: Get the list of all the points
  *     tags: [Points]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of a user
  *     responses:
  *       200:
  *         description: The list of the points
@@ -85,5 +88,6 @@ module.exports = router;
  *               type: array
  *               items:
  *                  $ref: '#/components/schemas/Point'
+ *       500:
+ *         description: Cannot find history
  */
-

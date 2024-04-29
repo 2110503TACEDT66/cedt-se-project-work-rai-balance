@@ -22,6 +22,7 @@
     "@types/react": "18.2.60",
     "@types/react-dom": "18.2.19",
     "dayjs": "^1.11.10",
+    "docker": "^1.0.0",
     "next": "^13.4.16",
     "next-auth": "^4.23.2",
     "react": "18.2.0",

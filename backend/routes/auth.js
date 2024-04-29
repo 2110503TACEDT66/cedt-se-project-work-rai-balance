@@ -124,59 +124,6 @@ module.exports = router;
  *                 $ref: '#/components/schemas/User'
  */
 
-// delete the User
-/**
- * @swagger
- * /auth/delete:
- *   delete:
- *     summary: Delete a User by ID
- *     tags: [Auth]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the User
- *
- *     responses:
- *       200:
- *         description: User deleted successfully
- */
-
-// update the User
-/**
- * @swagger
- * /auth/update:
- *  put:
- *     summary: Update a User by ID
- *     tags: [Auth]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the User
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *            schema:
- *              $ref: '#/components/schemas/User'
- *     responses:
- *       200:
- *         description: User updated successfully
- *         content:
- *           application/json:
- *              schema:
- *                $ref: '#/components/schemas/User'
- *       404:
- *         description: User not found
- *       500:
- *         description: Server error
- */
-
 // Ban the User
 /**
  * @swagger
