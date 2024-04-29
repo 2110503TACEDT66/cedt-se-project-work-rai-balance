@@ -40,16 +40,18 @@ export default function Navbar() {
           </div>
 
           {/* Navbar links */}
-          <div className="hidden sm:block sm:ml-4">
-            <div className="flex">
+          <div className="hidden sm:block">
+            <div className="flex mr-4">
               <TopMenuItem title='Home' pageRef='/' />
               <TopMenuItem title='Coworking' pageRef='/coworking' />
               <TopMenuItem title='About Us' pageRef='/about' />
               {/* Add more navigation links here */}
               {
-                session ? <div className='flex justify-center'><Image src={'/img/userlogo.png'} className='h-[40%] mt-11 w-auto mb-auto mt-auto'
-                  alt='logo' width={0} height={0} sizes='15vh' onClick={toggleMenuL} />
-                </div>
+                session ?
+                  <div className='flex justify-center'>
+                    <Image src={'/img/userlogo.png'} className='h-[40%] mt-11 w-auto mb-auto mt-auto'
+                      alt='logo' width={0} height={0} sizes='15vh' onClick={toggleMenuL} />
+                  </div>
                   : <TopMenuItem title='Login' pageRef='/login' />
                 // <TopMenuItem title='Sign in' pageRef='/api/auth/signin'/>
               }
@@ -63,11 +65,11 @@ export default function Navbar() {
                 <Link href={'/mybooking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>My Bookings</Link>
                 <Link href={`/pointHistory/${session?.user._id}`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Point History</Link>
                 {
-                  session?.user?.role == 'admin' ? 
-                  <div>
-                    <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
-                    <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
-                  </div>
+                  session?.user?.role == 'admin' ?
+                    <div>
+                      <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
+                      <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
+                    </div>
                     : null
                 }
 
@@ -100,14 +102,14 @@ export default function Navbar() {
             <Link href={'/coworking'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>Coworking</Link>
             <Link href={'/about'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenu}>About us</Link>
             {
-                  
-                  session?.user?.role == 'admin' ? (
-                    <div>
-                      <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
-                      <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
-                    </div>
-                  )
-                    : null
+
+              session?.user?.role == 'admin' ? (
+                <div>
+                  <Link href={'/approval'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>Approval</Link>
+                  <Link href={'/allusers'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={toggleMenuL}>View All Users</Link>
+                </div>
+              )
+                : null
             }
             {
               session ?
@@ -120,7 +122,7 @@ export default function Navbar() {
 
                 : <Link href={'/login'} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:rounded-b-md" onClick={toggleMenu}>Login</Link>
             }
-             
+
           </div>
         </div>
       ) : null}
@@ -129,3 +131,4 @@ export default function Navbar() {
     </div>
   );
 }
+

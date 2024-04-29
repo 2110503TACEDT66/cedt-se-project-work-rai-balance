@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
+    "test:watch": "jest --watch",
     "cypress": "cypress open",
-    "e2e":"start-server-and-test dev 3000 cypress"
+    "e2e": "start-server-and-test dev 3000 cypress"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -30,7 +31,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.2.1",
+    "@testing-library/react": "^14.3.1",
     "@testing-library/user-event": "^14.5.2",
     "autoprefixer": "^10.4.17",
     "cypress": "^13.4.0",
