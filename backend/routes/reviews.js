@@ -244,32 +244,3 @@ module.exports = router;
  *       500:
  *         description: Cannot get reviews
  */
-
-// getReviewsByCoworking
-/**
- * @swagger
- * /coworkings/{id}/reviews:
- *   get:
- *     summary: Get reviews by coworking ID
- *     tags: [Reviews]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the coworking
- *     responses:
- *       200:
- *         description: The list of reviews for the coworking id
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Review'
- *       404:
- *         description: No reviews found for the reservation id
- *       500:
- *         description: Cannot get reviews
- */
