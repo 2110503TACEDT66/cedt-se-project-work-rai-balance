@@ -66,7 +66,7 @@ export default async function CoworkingDetailPage({params}:{params:{cid:string}}
                      </Link>:<p className="text-red-500">You are banned and cannot make reservations.</p>
                   }
                      
-                     {session.user.role === 'banned user' && <p className="text-red-500">You are banned and cannot make reservations.</p>}
+                     {/* {session.user.role === 'banned user' && <p className="text-red-500">You are banned and cannot make reservations.</p>} */}
                   </> :
                   <Link href={`/login`}>
                      <button className="block rounded-md px-3 py-2 text-md font-semibold text-white shadow-sm bg-[#252645] bg-gradient-to-r hover:from-[#252645] hover:to-[#5C5EAB]">Log in to make Reservation</button>
