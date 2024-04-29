@@ -35,7 +35,7 @@ export default function ApproveReview({ params }: { params: { rid: string } }) {
     }
   };
 
-  const refresh = async () => {
+  const control = async () => {
     router.replace("/approval");
     router.refresh();
   };
@@ -56,7 +56,7 @@ export default function ApproveReview({ params }: { params: { rid: string } }) {
         <div className="flex justify-center items-center">
           {/* <Link href={'/approval'}> */}
           <button
-            onClick={refresh}
+            onClick={control}
             className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10"
           >
             Back to Menu
