@@ -30,7 +30,7 @@ exports.getReservations = async (req, res, next) => {
       });
     }
   }
-  
+
   try {
     const reservations = await query;
     res.status(200).json({
@@ -80,7 +80,6 @@ exports.getReservation = async (req, res, next) => {
 //route   POST /api/project/:coworkingId/reservations
 //access  Private
 exports.addReservation = async (req, res, next) => {
-  
   try {
     req.body.coworking = req.params.coworkingId;
 
@@ -133,24 +132,28 @@ exports.addReservation = async (req, res, next) => {
 
     const user = await User.findById(req.user.id);
 
-    if(user.currentPoint <= 0){
+    if (user.currentPoint <= 0) {
       return res.status(400).json({
         success: false,
         message: `Point is not enough, cannot make reservation`,
       });
     }
-    
+
     const point = await Point.create({
       user: user._id,
-      updatedPoint: user.currentPoint-1,
+      updatedPoint: user.currentPoint - 1,
       change: "Deduct 1",
-      message: "Make reservation successfully"
-    })
-
-    const user1 = await User.findByIdAndUpdate(user.id, {currentPoint: point.updatedPoint}, {
-      new: true,
-      runValidators: true,
+      message: "Make reservation successfully",
     });
+
+    const user1 = await User.findByIdAndUpdate(
+      user.id,
+      { currentPoint: point.updatedPoint },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     const reservation = await Reservation.create(req.body);
     res.status(201).json({
@@ -202,7 +205,11 @@ exports.updateReservation = async (req, res, next) => {
     }
 
     const now = new Date().toISOString();
-    const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
+    const endReservation =
+      reservation.apptDate.toISOString().split("T")[0] +
+      "T" +
+      reservation.end +
+      ".000Z";
     if (endReservation <= now) {
       return res.status(401).json({
         success: false,
@@ -279,7 +286,11 @@ exports.deleteReservation = async (req, res, next) => {
 
     const now = new Date().toISOString();
     // console.log('Time: ' + now);
-    const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
+    const endReservation =
+      reservation.apptDate.toISOString().split("T")[0] +
+      "T" +
+      reservation.end +
+      ".000Z";
     if (endReservation <= now) {
       return res.status(401).json({
         success: false,
@@ -302,13 +313,17 @@ exports.deleteReservation = async (req, res, next) => {
       user: user._id,
       updatedPoint: user.currentPoint + 1,
       change: "Add 1",
-      message: "Delete reservation successfully"
+      message: "Delete reservation successfully",
     });
 
-    const user1 = await User.findByIdAndUpdate(user.id, {currentPoint: point.updatedPoint}, {
-      new: true,
-      runValidators: true,
-    });
+    const user1 = await User.findByIdAndUpdate(
+      user.id,
+      { currentPoint: point.updatedPoint },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     res.status(200).json({
       success: true,

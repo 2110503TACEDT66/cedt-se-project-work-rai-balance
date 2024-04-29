@@ -24,6 +24,10 @@ router
   .route("/:id")
   .get(protect, getReservation)
   .put(protect, authorize("admin", "user", "banned user"), updateReservation)
-  .delete(protect, authorize("admin", "user", "banned user"), deleteReservation);
+  .delete(
+    protect,
+    authorize("admin", "user", "banned user"),
+    deleteReservation
+  );
 
 module.exports = router;
