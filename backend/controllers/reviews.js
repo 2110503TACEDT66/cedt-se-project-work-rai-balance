@@ -346,7 +346,7 @@ exports.getReview = async (req, res, next) => {
 };
 
 //desc    Get all reviews
-//route   POST /api/project/reviews/all
+//route   POST /api/project/coworkings/:coworkings id/reviews/all
 //access  Private
 exports.getReviews = async (req, res, next) => {
   try {
