@@ -11,14 +11,21 @@ exports.register = async (req, res, next) => {
     const { name, email, telephone, password, role } = req.body;
 
     // Create user
-    const user = await User.create({ name, email, telephone, password, role, currentPoint: 2 });
+    const user = await User.create({
+      name,
+      email,
+      telephone,
+      password,
+      role,
+      currentPoint: 2,
+    });
 
     const point = await Point.create({
       user: user._id,
       updatedPoint: 2,
       change: "Add 2",
-      message: "Register successfully"
-  });
+      message: "Register successfully",
+    });
 
     sendTokenResponse(user, 201, res);
   } catch (err) {
@@ -91,10 +98,10 @@ const sendTokenResponse = (user, statusCode, res) => {
     success: true,
     _id: user._id,
     name: user.name,
-    telephone:user.telephone,
+    telephone: user.telephone,
     email: user.email,
-    role:user.role,
-    currentPoint:user.currentPoint,
+    role: user.role,
+    currentPoint: user.currentPoint,
     token,
   });
 };
@@ -180,17 +187,18 @@ exports.getAllUsers = async (req, res, next) => {
     const users = await query;
 
     // Get the count of reservations for each user
-    const usersWithReservationCounts = await Promise.all(users.map(async (user) => {
-      const reservationCount = await Reservation.countDocuments({ user: user._id });
-      const reviewWithoutApproval = await Reservation.countDocuments({
-        user: user._id,
-        $or: [
-          { hasReview: "no" },
-          { hasReview: "pending" }
-        ]
-      });
-      return { ...user.toObject(), reservationCount, reviewWithoutApproval };
-    }));
+    const usersWithReservationCounts = await Promise.all(
+      users.map(async (user) => {
+        const reservationCount = await Reservation.countDocuments({
+          user: user._id,
+        });
+        const reviewWithoutApproval = await Reservation.countDocuments({
+          user: user._id,
+          $or: [{ hasReview: "no" }, { hasReview: "pending" }],
+        });
+        return { ...user.toObject(), reservationCount, reviewWithoutApproval };
+      })
+    );
 
     // Pagination query
     const pagination = {};
@@ -299,10 +307,7 @@ exports.banUser = async (req, res, next) => {
 
   const reviewWithoutApproval = await Reservation.countDocuments({
     user: user._id,
-    $or: [
-      { hasReview: "no" },
-      { hasReview: "pending" }
-    ]
+    $or: [{ hasReview: "no" }, { hasReview: "pending" }],
   });
 
   if (reviewWithoutApproval > 0) {
@@ -312,11 +317,15 @@ exports.banUser = async (req, res, next) => {
     });
   }
 
-  const updatedUser = await User.findByIdAndUpdate(req.params.userId, {role: "banned user"}, {
-    new: true,
-    runValidators: true,
-  });
-  
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.userId,
+    { role: "banned user" },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
   res.status(200).json({
     success: true,
     data: updatedUser,
@@ -346,21 +355,25 @@ exports.unbanUser = async (req, res, next) => {
 
   const point = await Point.create({
     user: user._id,
-    updatedPoint: user.currentPoint+1,
+    updatedPoint: user.currentPoint + 1,
     change: "Add 1",
-    message: "You have been unbanned"
-  })
-
-  const updatedUser = await User.findByIdAndUpdate(user.id, {currentPoint: point.updatedPoint, role: "user"}, {
-    new: true,
-    runValidators: true,
+    message: "You have been unbanned",
   });
+
+  const updatedUser = await User.findByIdAndUpdate(
+    user.id,
+    { currentPoint: point.updatedPoint, role: "user" },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   // const updatedUser = await User.findByIdAndUpdate(req.params.userId, {role: "user"}, {
   //   new: true,
   //   runValidators: true,
   // });
-  
+
   res.status(200).json({
     success: true,
     data: updatedUser,
@@ -373,14 +386,14 @@ exports.unbanUser = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
   const user = await User.findById(req.params.userId).populate({
     path: "reservations",
-    populate: { path: "reviews" } // Populate reviews from each reservation
+    populate: { path: "reviews" }, // Populate reviews from each reservation
   });
   // console.log(user);
 
   if (!user) {
     return res.status(404).json({
       success: false,
-      message: 'User not found',
+      message: "User not found",
     });
   }
 

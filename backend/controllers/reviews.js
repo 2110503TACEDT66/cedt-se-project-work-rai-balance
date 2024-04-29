@@ -1,6 +1,6 @@
 const Coworking = require("../models/Coworking");
 const Reservation = require("../models/Reservation");
-const Review = require("../models/Review")
+const Review = require("../models/Review");
 const Point = require("../models/Point");
 const User = require("../models/User");
 
@@ -8,103 +8,112 @@ const User = require("../models/User");
 //route   POST /api/project/reservation/:reservationId/reviews
 //access  Private
 exports.addReview = async (req, res, next) => {
-   try{
-      req.body.reservation = req.params.reservationId;
-      
-      const reservation = await Reservation.findById(req.params.reservationId);
-      console.log(req.params.reservationId);
+  try {
+    req.body.reservation = req.params.reservationId;
 
-      if (req.user.role === "banned user") {
-        return res.status(404).json({
-          success: false,
-          message: `You are banned`,
-        });
-      }
-      
-      if (!reservation) {
-         return res.status(404).json({
-           message: `No Reservation with the id of ${req.params.reservationId}`,
-         });
-       }
-      
-      req.body.user = reservation.user;
+    const reservation = await Reservation.findById(req.params.reservationId);
+    console.log(req.params.reservationId);
 
-      req.body.coworking = reservation.coworking;
-
-      const coworking = await Coworking.findById(req.body.coworking)
-      if (!reservation) {
-        return res.status(404).json({
-          message: `No coworking with the id of ${req.body.coworking}`,
-        });
-      }
-
-      const existedReview = await Review.find({ reservation: req.params.reservationId });
-
-      // Can only create 1 review per reservation
-      if (existedReview.length >= 1) {
-        return res.status(400).json({
-          success: false,
-          message: `The user has already made a review for reservation ${req.body.reservation}`,
-        });
-      }
-
-      const now = new Date().toISOString();
-      // console.log('Time: ' + now);
-      const endReservation = reservation.apptDate.toISOString().split('T')[0] + 'T' + reservation.end + '.000Z';
-      if (endReservation > now) {
-        return res.status(400).json({
-          success: false,
-          message: `The user cannot make review before due time`,
-        });
-      }
-
-      //Check count of review
-      // const existedReview = await Review.find({ user: req.body.user });
-      // the user can only create 3 review
-        // if (existedReview.length >= 1) {
-        //   return res.status(400).json({
-        //     success: false,
-        //     message: `The user with ID ${req.user.id} has already made 1 review`,
-        //   });
-        // }
-
-      const review = await Review.create({
-        coworking: req.body.coworking,
-        reservation: req.params.reservationId,
-        user: req.user.id,
-        approval: "pending",
-        rating: req.body.rating,
-        comment: req.body.comment
-      });
-
-      const reservationHasReview = await Reservation.findByIdAndUpdate(req.params.reservationId, { hasReview: "pending"})
-
-      // const user = await User.findById(req.user.id);
-      res.status(201).json({
-         success: true,
-         data: review,
-       });
-   }catch (err) {
-    console.log(err.stack);
-    return res.status(500).json({
-      success: false,
-      message: "Cannot create Review",
-    });
-  }
-}
-
-//desc    Update review
-//route   PUT /api/project/reviews/:Id
-//access  Private
-exports.updateReview = async (req, res, next) => {
-  try{
     if (req.user.role === "banned user") {
       return res.status(404).json({
         success: false,
         message: `You are banned`,
       });
     }
-    
+
+    if (!reservation) {
+      return res.status(404).json({
+        message: `No Reservation with the id of ${req.params.reservationId}`,
+      });
+    }
+
+    req.body.user = reservation.user;
+
+    req.body.coworking = reservation.coworking;
+
+    const coworking = await Coworking.findById(req.body.coworking);
+    if (!reservation) {
+      return res.status(404).json({
+        message: `No coworking with the id of ${req.body.coworking}`,
+      });
+    }
+
+    const existedReview = await Review.find({
+      reservation: req.params.reservationId,
+    });
+
+    // Can only create 1 review per reservation
+    if (existedReview.length >= 1) {
+      return res.status(400).json({
+        success: false,
+        message: `The user has already made a review for reservation ${req.body.reservation}`,
+      });
+    }
+
+    const now = new Date().toISOString();
+    // console.log('Time: ' + now);
+    const endReservation =
+      reservation.apptDate.toISOString().split("T")[0] +
+      "T" +
+      reservation.end +
+      ".000Z";
+    if (endReservation > now) {
+      return res.status(400).json({
+        success: false,
+        message: `The user cannot make review before due time`,
+      });
+    }
+
+    //Check count of review
+    // const existedReview = await Review.find({ user: req.body.user });
+    // the user can only create 3 review
+    // if (existedReview.length >= 1) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: `The user with ID ${req.user.id} has already made 1 review`,
+    //   });
+    // }
+
+    const review = await Review.create({
+      coworking: req.body.coworking,
+      reservation: req.params.reservationId,
+      user: req.user.id,
+      approval: "pending",
+      rating: req.body.rating,
+      comment: req.body.comment,
+    });
+
+    const reservationHasReview = await Reservation.findByIdAndUpdate(
+      req.params.reservationId,
+      { hasReview: "pending" }
+    );
+
+    // const user = await User.findById(req.user.id);
+    res.status(201).json({
+      success: true,
+      data: review,
+    });
+  } catch (err) {
+    console.log(err.stack);
+    return res.status(500).json({
+      success: false,
+      message: "Cannot create Review",
+    });
+  }
+};
+
+//desc    Update review
+//route   PUT /api/project/reviews/:Id
+//access  Private
+exports.updateReview = async (req, res, next) => {
+  try {
+    if (req.user.role === "banned user") {
+      return res.status(404).json({
+        success: false,
+        message: `You are banned`,
+      });
+    }
+
     if (req.body.approval) {
       return res
         .status(400)
@@ -123,9 +132,7 @@ exports.updateReview = async (req, res, next) => {
       });
     }
 
-    if (
-      review.user.toString() !== req.user.id 
-    ) {
+    if (review.user.toString() !== req.user.id) {
       return res.status(401).json({
         success: false,
         message: `User ${req.user.id} is not authorized to update this reservation`,
@@ -146,7 +153,6 @@ exports.updateReview = async (req, res, next) => {
       });
     }
 
-
     review = await Review.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -156,15 +162,14 @@ exports.updateReview = async (req, res, next) => {
       success: true,
       data: review,
     });
-  }catch(err){
-      console.log(err.stack);
-      return res.status(500).json({
-        success: false,
-        message: "Cannot update Review",
-      });
+  } catch (err) {
+    console.log(err.stack);
+    return res.status(500).json({
+      success: false,
+      message: "Cannot update Review",
+    });
   }
-}
-
+};
 
 //desc    Update review's approval field
 //route   PUT /api/project/reviews/:Id/approve
@@ -181,9 +186,7 @@ exports.approveReview = async (req, res, next) => {
     }
 
     //Make sure user is the reservation owner
-    if (
-      req.user.role !== "admin"
-    ) {
+    if (req.user.role !== "admin") {
       return res.status(401).json({
         success: false,
         message: `User ${req.user.id} is not authorized to approve this review`,
@@ -191,59 +194,86 @@ exports.approveReview = async (req, res, next) => {
     }
 
     if (review.approval == "pending" || review.approval == "disapproved") {
-      review = await Review.findByIdAndUpdate(req.params.id, {approval: req.body.approval}, {
-        new: true,
-        runValidators: true,
-      });
-  
-      const reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
-        new: true,
-        runValidators: true,
-      });
-  
+      review = await Review.findByIdAndUpdate(
+        req.params.id,
+        { approval: req.body.approval },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
+      const reservation = await Reservation.findByIdAndUpdate(
+        review.reservation,
+        { hasReview: req.body.approval },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
       const user = await User.findById(review.user);
-  
+
       if (req.body.approval == "approved") {
         const point = await Point.create({
           user: user,
-          updatedPoint: user.currentPoint+2,
+          updatedPoint: user.currentPoint + 2,
           change: "Add 2",
-          message: "Your review has been approved"
-        })
-    
-        const user1 = await User.findByIdAndUpdate(user, {currentPoint: point.updatedPoint}, {
+          message: "Your review has been approved",
+        });
+
+        const user1 = await User.findByIdAndUpdate(
+          user,
+          { currentPoint: point.updatedPoint },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+    } else if (
+      review.approval == "approved" &&
+      req.body.approval == "disapproved"
+    ) {
+      review = await Review.findByIdAndUpdate(
+        req.params.id,
+        { approval: req.body.approval },
+        {
           new: true,
           runValidators: true,
-        });
-      }
-    } else if (review.approval == "approved" && req.body.approval == "disapproved") {
-      review = await Review.findByIdAndUpdate(req.params.id, {approval: req.body.approval}, {
-        new: true,
-        runValidators: true,
-      });
-  
-      const reservation = await Reservation.findByIdAndUpdate(review.reservation, {hasReview: req.body.approval}, {
-        new: true,
-        runValidators: true,
-      });
-  
+        }
+      );
+
+      const reservation = await Reservation.findByIdAndUpdate(
+        review.reservation,
+        { hasReview: req.body.approval },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+
       const user = await User.findById(review.user);
-      let userPoint = user.currentPoint-2;
+      let userPoint = user.currentPoint - 2;
       if (userPoint < 0) {
         userPoint = 0;
       }
-  
-        const point = await Point.create({
-          user: user,
-          updatedPoint: userPoint,
-          change: "Deduct 2",
-          message: "Your review has been changed from approved to disapproved"
-        })
-    
-        const user1 = await User.findByIdAndUpdate(user, {currentPoint: point.updatedPoint}, {
+
+      const point = await Point.create({
+        user: user,
+        updatedPoint: userPoint,
+        change: "Deduct 2",
+        message: "Your review has been changed from approved to disapproved",
+      });
+
+      const user1 = await User.findByIdAndUpdate(
+        user,
+        { currentPoint: point.updatedPoint },
+        {
           new: true,
           runValidators: true,
-        });
+        }
+      );
     }
 
     res.status(200).json({
@@ -257,13 +287,13 @@ exports.approveReview = async (req, res, next) => {
       message: "Cannot approve",
     });
   }
-}
+};
 
 //desc GET review by reviewId
 //route GET /api/project/reviews/:reviewId
 //access Private
 exports.getReviewById = async (req, res, next) => {
-  try{
+  try {
     const review = await Review.findById(req.params.id);
 
     if (!review) {
@@ -275,23 +305,25 @@ exports.getReviewById = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data:review
-    })
-  }catch(err){
+      data: review,
+    });
+  } catch (err) {
     console.log(err.stack);
     return res.status(500).json({
       success: false,
       message: "Cannot find review",
     });
   }
-}
+};
 
 // //desc    GET review by reservationId
 // //route   GET /api/project/reservations/:reservationId/reviews
 // //access  Private
 exports.getReview = async (req, res, next) => {
   try {
-    const review = await Review.findOne({ reservation: req.params.reservationId });
+    const review = await Review.findOne({
+      reservation: req.params.reservationId,
+    });
 
     if (!review) {
       return res.status(404).json({
@@ -311,7 +343,7 @@ exports.getReview = async (req, res, next) => {
       message: "Cannot get review",
     });
   }
-}
+};
 
 //desc    Get all reviews
 //route   POST /api/project/reviews/all
@@ -320,13 +352,13 @@ exports.getReviews = async (req, res, next) => {
   try {
     let query;
     if (!req.body.approval) {
-      query = Review.find().sort({approval: -1});
+      query = Review.find().sort({ approval: -1 });
     } else if (req.body.approval == "pending") {
-      query = Review.find({approval: "pending"});
+      query = Review.find({ approval: "pending" });
     } else if (req.body.approval == "approved") {
-      query = Review.find({approval: "approved"});
+      query = Review.find({ approval: "approved" });
     } else if (req.body.approval == "disapproved") {
-      query = Review.find({approval: "disapproved"});
+      query = Review.find({ approval: "disapproved" });
     }
 
     const reviews = await query;
@@ -343,14 +375,17 @@ exports.getReviews = async (req, res, next) => {
       message: "Cannot get reviews",
     });
   }
-}
+};
 
 //desc    GET reviews by coworkingId
 //route   GET /api/project/coworkings/:coworkingId/reviews
 //access  Private
 exports.getReviewsByCoworking = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ coworking: req.params.coworkingId, approval: "approved" });
+    const reviews = await Review.find({
+      coworking: req.params.coworkingId,
+      approval: "approved",
+    });
 
     if (!reviews) {
       return res.status(404).json({
@@ -371,4 +406,4 @@ exports.getReviewsByCoworking = async (req, res, next) => {
       message: "Cannot get reviews",
     });
   }
-}
+};
