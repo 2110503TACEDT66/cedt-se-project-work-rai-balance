@@ -47,13 +47,11 @@ export default function ApproveReview({params}:{params:{rid:string}}) {
 
    const control = async() => {     
     router.replace("/approval")
-    router.refresh()
+    router.refresh()}
 
-}
-useEffect(() => {
-  // Call the approve function when the component mounts
-  disapprove();
-}, []); // Empty dependency array to ensure this effect runs only once
+    useEffect(() => {
+      disapprove();
+    }, []);
 
 
     return (
