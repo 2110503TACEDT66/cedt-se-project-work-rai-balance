@@ -101,21 +101,9 @@ module.exports = router;
  *   get:
  *       summary: Get current user details
  *       tags: [Auth]
- *       requestBody:
- *           required: true
- *           content:
- *               application/json:
- *                   schema:
- *                       $ref: '#/components/schemas/User'
  *       responses:
  *           200:
  *               description: Details of the current user
- *               content:
- *                   application/json:
- *                   items:
- *                       $ref: '#/components/schemas/User'
- *           404:
- *               description: User not found
  */
 
 // Get All Users
