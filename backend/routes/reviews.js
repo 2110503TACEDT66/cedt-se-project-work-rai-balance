@@ -229,7 +229,7 @@ module.exports = router;
 /**
  * @swagger
  * /reviews/all:
- *   get:
+ *   post:
  *     summary: Get all review
  *     tags: [Reviews]
  *     responses:
