@@ -76,11 +76,11 @@ export default function Booking() {
                         </LocalizationProvider>
                         <div className="text-md text-left text-gray-600">Start</div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker className="bg-white w-[300px]" value={start} onChange={(newValue) => { setStart(newValue) }} />
+                            <TimePicker test-cy="st-time" className="bg-white w-[300px]" value={start} onChange={(newValue) => { setStart(newValue) }} />
                         </LocalizationProvider>
                         <div className="text-md text-left text-gray-600">End</div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker className="bg-white w-[300px]" value={end} onChange={(newValue) => { setEnd(newValue) }} />
+                            <TimePicker test-cy="en-time" className="bg-white w-[300px]" value={end} onChange={(newValue) => { setEnd(newValue) }} />
                         </LocalizationProvider>
                     </div>
 
