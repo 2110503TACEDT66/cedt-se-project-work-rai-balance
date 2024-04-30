@@ -236,6 +236,18 @@ exports.updateReservation = async (req, res, next) => {
         message: "Cannot update reservation that has already started",
       });
     }
+    
+    
+    const startReservationBangkokUpdate = new Date(req.body.apptDate.split("T")[0] + "T" + req.body.start + ".000Z");
+    const startReservationUTC7Update = new Date(startReservationBangkokUpdate.getTime() - 7 * 60 * 60 * 1000);
+    const startReservationUTC7ISOUpdate = startReservationUTC7Update.toISOString();
+    
+    if (startReservationUTC7ISOUpdate < now) {
+      return res.status(401).json({
+        success: false,
+        message: "Start time of this reservation has to be after current time",
+      });
+    }
 
     if (
       req.body.start.localeCompare(coworking.opentime) < 0 ||

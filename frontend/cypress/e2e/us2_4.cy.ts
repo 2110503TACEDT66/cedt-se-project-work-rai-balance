@@ -23,4 +23,4 @@ describe('US2-4 Admin can delete user reviews', () => {
     cy.get('[href="/approval"]').click();
     /* ==== End Cypress Studio ==== */
   })
-})
+}) 

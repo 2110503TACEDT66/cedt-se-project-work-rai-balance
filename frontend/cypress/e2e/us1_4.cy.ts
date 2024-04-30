@@ -22,6 +22,10 @@ describe('US1-4 Admin reduce user point as a punish when user leave a bad review
 
     cy.get('[href="/approval"]').click();
 
+    cy.wait(1000);
+
+    cy.contains('Approval').should('not.exist');
+
     cy.wait(2000);
 
   })
