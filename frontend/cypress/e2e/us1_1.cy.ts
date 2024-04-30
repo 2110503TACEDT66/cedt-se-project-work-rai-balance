@@ -11,15 +11,15 @@ describe('US1-1 : User can see their current points.', () => {
 
     cy.get('input[type="email"]').type(Cypress.env('userUs1Email'));
 
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get('input[type="password"]').type(Cypress.env('userPass'));
 
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get('button[type="submit"]').click();
 
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get('.h-\\[40\\%\\]').click();
     
@@ -36,6 +36,5 @@ describe('US1-1 : User can see their current points.', () => {
     
     cy.contains('Login').should('exist');
 
-    
   });
 })
