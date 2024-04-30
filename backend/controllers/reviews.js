@@ -51,13 +51,15 @@ exports.addReview = async (req, res, next) => {
     }
 
     const now = new Date().toISOString();
-    // console.log('Time: ' + now);
-    const endReservation =
-      reservation.apptDate.toISOString().split("T")[0] +
-      "T" +
-      reservation.end +
-      ".000Z";
-    if (endReservation > now) {
+    // console.log("Now: " + now);
+    const endReservationBangkok = new Date(reservation.apptDate.toISOString().split("T")[0] + "T" + reservation.end + ".000Z");
+    // console.log("End: " + endReservationBangkok);
+    const endReservationUTC7 = new Date(endReservationBangkok.getTime() - 7 * 60 * 60 * 1000);
+    // console.log("End: " + endReservationUTC7);
+    const endReservationUTC7ISO = endReservationUTC7.toISOString();
+    // console.log("End: " + endReservationUTC7ISO);
+
+    if (endReservationUTC7ISO > now) {
       return res.status(400).json({
         success: false,
         message: `The user cannot make review before due time`,

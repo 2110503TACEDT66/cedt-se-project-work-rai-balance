@@ -33,12 +33,12 @@ export default function Booking() {
             const item: BookingItem = {
                 coworkingId: cid,
                 coworkingName: name,
-                bookDate: dayjs(bookDate).format("YYYY/MM/DD"),
+                bookDate: dayjs(bookDate).format("YYYY-MM-DD"),
                 start: dayjs(start).format('HH:mm:ss'),
                 end: dayjs(end).format('HH:mm:ss'),
                 userId: user
             };
-            console.log(item);
+            console.log(item.bookDate + ", " + item.start + ", " + item.end);
 
             const booking = await postBooking(session.user.token, item);
             console.log("Booking result:", booking);
