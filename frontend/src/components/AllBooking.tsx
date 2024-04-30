@@ -30,7 +30,7 @@ export default async function AllBooking({
               {BookingItem2.coworking?.name}
               
               {
-                BookingItem2.hasReview == "no" ?(
+                (BookingItem2.hasReview == "no" && new Date().toISOString() < new Date(new Date(BookingItem2.apptDate.split("T")[0] + "T" + BookingItem2.start + ".000Z").getTime() - 7 * 60 * 60 * 1000).toISOString()) ?(
                   <div className="ml-5 flex flex-row">
                     <Link href={"/mybooking/edit/" + BookingItem2._id} >
                     <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
@@ -45,7 +45,7 @@ export default async function AllBooking({
                 ):(
                   <div className="ml-5 flex flex-row">
                   <div className="text-sm font-light text-slate-400">
-                    Editing and deleting are no longer available
+                    Editing and deleting are no longer available after the start of reservation
                   </div>
                   
                 </div>
@@ -64,7 +64,7 @@ export default async function AllBooking({
             <div className="mt-5 flex justify-end">
               <div className="ml-5">
               {
-                new Date > new Date(BookingItem2.apptDate)?
+                new Date().toISOString() > new Date(new Date(BookingItem2.apptDate.split("T")[0] + "T" + BookingItem2.start + ".000Z").getTime() - 7 * 60 * 60 * 1000).toISOString()?
                 <div>
                   {BookingItem2.hasReview == 'no' ?(
                   <Link href={`/review?id=${BookingItem2._id}&name=${BookingItem2.coworking?.name}`}>
@@ -83,7 +83,7 @@ export default async function AllBooking({
                 }
                 </div>
                 : <div>
-                  Please review after {new Date(BookingItem2.apptDate).toLocaleDateString()}
+                  Please review after {new Date(BookingItem2.apptDate).toLocaleDateString()} {BookingItem2.end}
                 </div>
               }
               
