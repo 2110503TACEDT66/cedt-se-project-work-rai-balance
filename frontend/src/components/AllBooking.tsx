@@ -31,11 +31,11 @@ export default async function AllBooking({
                 (BookingItem2.hasReview == "no" && new Date().toISOString() < new Date(new Date(BookingItem2.apptDate.split("T")[0] + "T" + BookingItem2.start + ".000Z").getTime() - 7 * 60 * 60 * 1000).toISOString()) ? (
                   <div className="ml-5 flex flex-row">
                     <Link href={"/mybooking/edit/" + BookingItem2._id} >
-                      <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                      <Image src={'/img/edit.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='editlogo'
                         width={0} height={0} sizes='100vh' />
                     </Link>
                     <Link href={`/mybooking/delete/${BookingItem2._id}`}>
-                      <Image src={'/img/trash.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='logo'
+                      <Image src={'/img/trash.png'} className='w-[20px] ml-5 mt-auto mb-auto' alt='deletelogo'
                         width={0} height={0} sizes='100vh' />
                     </Link>
                   </div>

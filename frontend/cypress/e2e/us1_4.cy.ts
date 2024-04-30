@@ -8,23 +8,26 @@ describe('US1-4 Admin reduce user point as a punish when user leave a bad review
 
     cy.get('input[type="email"]').type(Cypress.env('adminEmail'));
 
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get('input[type="password"]').type(Cypress.env('adminPass'));
 
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get('button[type="submit"]').click();
 
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.get('.h-\\[40\\%\\]').click();
 
     cy.get('[href="/approval"]').click();
 
-    cy.wait(1000);
+    cy.wait(2000);
 
-    cy.contains('Approval').should('not.exist');
+    cy.contains('All').should('exist');
+    cy.contains('Approve').should('exist');
+    cy.contains('Pending').should('exist');
+    cy.contains('Disapprove').should('exist');
 
     cy.wait(2000);
 
@@ -43,6 +46,6 @@ describe('US1-4 Admin reduce user point as a punish when user leave a bad review
 
     cy.visit('/approval')
     cy.wait(1000);
-    cy.contains('Approval').should('not.exist');
+    cy.contains('Approve').should('not.exist');
   });
 })

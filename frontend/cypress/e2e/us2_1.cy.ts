@@ -4,15 +4,15 @@ beforeEach(() => {
 
   cy.get('input[type="email"]').type(Cypress.env('user999Email'));
 
-  cy.wait(1000);
+  cy.wait(2000);
 
   cy.get('input[type="password"]').type(Cypress.env('userPass'));
 
-  cy.wait(1000);
+  cy.wait(2000);
 
   cy.get('button[type="submit"]').click();
 
-  cy.wait(1000);
+  cy.wait(2000);
 
 });
 
