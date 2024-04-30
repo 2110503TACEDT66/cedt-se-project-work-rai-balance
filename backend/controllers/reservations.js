@@ -117,7 +117,7 @@ exports.addReservation = async (req, res, next) => {
     // console.log("Now: " + now);
 
     // Get the startReservation time in Bangkok timezone
-    const startReservationBangkok = new Date(req.body.apptDate + "T" + req.body.start + ".000Z");
+    const startReservationBangkok = new Date(req.body.apptDate.split("T")[0] + "T" + req.body.start + ".000Z");
 
     // Adjust the startReservation time to UTC+7 by subtracting 7 hours
     const startReservationUTC7 = new Date(startReservationBangkok.getTime() - 7 * 60 * 60 * 1000);
