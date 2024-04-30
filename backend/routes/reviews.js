@@ -96,6 +96,13 @@ module.exports = router;
  *   post:
  *       summary: Create a new review
  *       tags: [Reviews]
+ *       parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of a reservation
  *       requestBody:
  *           required: true
  *           content:
@@ -209,7 +216,7 @@ module.exports = router;
 // get review
 /**
  * @swagger
- * /reviews/reservations/{id}/reviews:
+ * /reservations/{id}/reviews:
  *   get:
  *     summary: Get a review by ID
  *     tags: [Reviews]
@@ -238,7 +245,7 @@ module.exports = router;
  * @swagger
  * /reviews/all:
  *   post:
- *     summary: Get all review by ID
+ *     summary: Get all reviews
  *     tags: [Reviews]
  *     responses:
  *       200:
@@ -256,9 +263,9 @@ module.exports = router;
 // getReviewsByCoworking
 /**
  * @swagger
- * /coworkings/{id}/reviews:
+ * /coworkings/{id}/reviews/all:
  *   get:
- *     summary: Get reviews by coworking ID
+ *     summary: Get all reviews by coworking ID
  *     tags: [Reviews]
  *     parameters:
  *       - in: path
@@ -269,15 +276,11 @@ module.exports = router;
  *         description: The ID of the coworking
  *     responses:
  *       200:
- *         description: The list of reviews for the coworking id
+ *         description: The list of reviews for the coworking ID
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Review'
- *       404:
- *         description: No reviews found for the reservation id
+ *                  $ref: '#/components/schemas/Review'
  *       500:
  *         description: Cannot get reviews
  */
