@@ -12,8 +12,6 @@ export default async function AllBooking({
 }) {
   const bookingsJsonReady = await bookingsJson;
   console.log(bookingsJsonReady)
-  console.log("PPPPPP");
-  console.log(new Date);
 
   return (
     <>
@@ -45,7 +43,7 @@ export default async function AllBooking({
                 ):(
                   <div className="ml-5 flex flex-row">
                   <div className="text-sm font-light text-slate-400">
-                    Editing and deleting are no longer available after the start of reservation
+                    Can't edit and delete after the start of reservation
                   </div>
                   
                 </div>
