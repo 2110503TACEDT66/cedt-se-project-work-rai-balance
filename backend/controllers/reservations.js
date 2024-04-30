@@ -113,6 +113,26 @@ exports.addReservation = async (req, res, next) => {
     //   });
     // }
 
+    const now = new Date().toISOString();
+    // console.log("Now: " + now);
+
+    // Get the startReservation time in Bangkok timezone
+    const startReservationBangkok = new Date(req.body.apptDate + "T" + req.body.start + ".000Z");
+
+    // Adjust the startReservation time to UTC+7 by subtracting 7 hours
+    const startReservationUTC7 = new Date(startReservationBangkok.getTime() - 7 * 60 * 60 * 1000);
+
+    // Convert startReservationUTC7 to ISO string
+    const startReservationUTC7ISO = startReservationUTC7.toISOString();
+    // console.log("Start: " + startReservationUTC7ISO);
+
+    if (startReservationUTC7ISO < now) {
+      return res.status(401).json({
+        success: false,
+        message: "Please make a reservation that starts after the current time",
+      });
+    }
+
     if (
       req.body.start.localeCompare(coworking.opentime) < 0 ||
       req.body.end.localeCompare(coworking.closetime) > 0
