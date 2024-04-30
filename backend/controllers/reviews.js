@@ -76,6 +76,13 @@ exports.addReview = async (req, res, next) => {
     //   });
     // }
 
+    if (req.body.rating === null || req.body.rating === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: `Review rating must be included.`,
+      });
+    }
+
     const review = await Review.create({
       coworking: req.body.coworking,
       reservation: req.params.reservationId,

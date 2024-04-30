@@ -78,6 +78,7 @@ export default function EditReview({ params }: { params: { rid: string } }) {
             Tap to rate
           </Typography>
           <Rating
+            data-testid="rating-component"
             size="large"
             name="rate"
             value={value}

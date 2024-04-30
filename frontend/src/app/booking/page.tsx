@@ -70,17 +70,17 @@ export default function Booking() {
                 <div className="flex flex-wrap  justify-center  my-5 relative mb-8">
                     <div className=" space-y-2 ">
                         <div className="text-md text-left text-gray-600 ">Choose Date to Book</div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker className="bg-white w-[300px]"
+                        <LocalizationProvider test-cy="datepickmain" dateAdapter={AdapterDayjs}>
+                            <DatePicker test-cy="datepick" className="bg-white w-[300px]"
                                 value={bookDate} onChange={(value) => { setBookDate(value) }} />
                         </LocalizationProvider>
                         <div className="text-md text-left text-gray-600">Start</div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker className="bg-white w-[300px]" value={start} onChange={(newValue) => { setStart(newValue) }} />
+                            <TimePicker test-cy="st-time" className="bg-white w-[300px]" value={start} onChange={(newValue) => { setStart(newValue) }} />
                         </LocalizationProvider>
                         <div className="text-md text-left text-gray-600">End</div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker className="bg-white w-[300px]" value={end} onChange={(newValue) => { setEnd(newValue) }} />
+                            <TimePicker test-cy="en-time" className="bg-white w-[300px]" value={end} onChange={(newValue) => { setEnd(newValue) }} />
                         </LocalizationProvider>
                     </div>
 

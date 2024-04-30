@@ -127,6 +127,7 @@ exports.addReservation = async (req, res, next) => {
     // console.log("Start: " + startReservationUTC7ISO);
 
     if (startReservationUTC7ISO < now) {
+    // if (2 < 1) { // when add past booking
       return res.status(401).json({
         success: false,
         message: "Please make a reservation that starts after the current time",
