@@ -4,11 +4,11 @@ beforeEach(() => {
 
   cy.get('input[type="email"]').type(Cypress.env('userEmail'));
 
-  cy.wait(250);
+  cy.wait(1000);
 
   cy.get('input[type="password"]').type(Cypress.env('userPass'));
 
-  cy.wait(250);
+  cy.wait(1000);
 
   cy.get('button[type="submit"]').click();
 
@@ -16,8 +16,8 @@ beforeEach(() => {
 
 });
 
-describe('template spec', () => {
-  it('passes', () => {
+describe('US2-2 User shall allow edit their reviews', () => {
+  it('User edit their reviews', () => {
     cy.get('[href="/coworking"]').click();
 
     cy.get('[href="/coworking/660274cf2e6002e952322da0"] > .h-\\[300px\\] > .h-\\[70\\%\\] > .object-cover').click();

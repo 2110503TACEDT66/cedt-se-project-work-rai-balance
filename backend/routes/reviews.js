@@ -140,7 +140,7 @@ module.exports = router;
  *           application/json:
  *              schema:
  *                $ref: '#/components/schemas/Review'
- *       404:
+ *       400:
  *         description: Can not change approval
  *       500:
  *         description: Cannot update Review
@@ -160,13 +160,21 @@ module.exports = router;
  *           type: string
  *         required: true
  *         description: The ID of the review
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Review'
  *     responses:
  *       200:
  *         description: Review approved successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Review'
+ *               type: array
+ *               items:
+ *                  $ref: '#/components/schemas/Review'
  *       500:
  *         description: Cannot approve
  */
@@ -228,17 +236,10 @@ module.exports = router;
 //get all reviews
 /**
  * @swagger
- * /coworkings/{id}/reviews/all:
+ * /reviews/all:
  *   post:
  *     summary: Get all review by ID
  *     tags: [Reviews]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the coworking space
  *     responses:
  *       200:
  *         description: A list of review

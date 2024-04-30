@@ -4,32 +4,27 @@ beforeEach(() => {
 
   cy.visit("/login");
 
-  cy.get('input[type="email"]').type(Cypress.env('userEmail'));
+  cy.get('input[type="email"]').type(Cypress.env('userUs1Email'));
 
-  cy.wait(250);
+  cy.wait(1000);
 
   cy.get('input[type="password"]').type(Cypress.env('userPass'));
 
-  cy.wait(250);
+  cy.wait(1000);
 
   cy.get('button[type="submit"]').click();
 
-  cy.wait(250);
+  cy.wait(1000);
 
 });
 
 describe('template spec', () => {
   it('Check Point', () => {
-
     /* ==== Generated with Cypress Studio ==== */
-
     cy.get('.h-\\[40\\%\\]').click();
-    cy.get('[href="/pointHistory/662fcee0534b5136d4579ec0"]').click();
-
+    cy.get('[href="/pointHistory/66306babe91195858a52cb21"]').click();
+    cy.contains('Point : 2').should('exist');
     /* ==== End Cypress Studio ==== */
-
-    cy.contains('Point :').should('exist');
-
   })
 })
 

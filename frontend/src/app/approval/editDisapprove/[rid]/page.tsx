@@ -39,13 +39,20 @@ export default function ApproveReview({params}:{params:{rid:string}}) {
 
         if(disapproveReview.success == true){
           setHasApprove(true)
-          router.replace("/approval")
-          router.refresh()
       }else if(disapproveReview.success == false){
           alert(disapproveReview.message)
       }
 
    }
+
+   const control = async() => {     
+    router.replace("/approval")
+    router.refresh()}
+
+    useEffect(() => {
+      disapprove();
+    }, []);
+
 
     return (
       <main>
@@ -57,7 +64,7 @@ export default function ApproveReview({params}:{params:{rid:string}}) {
             </div>
           <div className="flex justify-center items-center">
               {/* <Link href={'/approval'}> */}
-                  <button onClick={disapprove} className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
+                  <button onClick={control} className="block rounded-md bg-black hover:bg-indigo-900 px-3 py-2 text-white shadow-sm flex flex-row m-10" >
                   Back to Menu
                   </button>
               {/* </Link> */}

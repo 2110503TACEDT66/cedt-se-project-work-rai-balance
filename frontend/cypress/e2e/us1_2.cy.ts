@@ -2,13 +2,13 @@ beforeEach(() => {
 
   cy.visit("/login");
 
-  cy.get('input[type="email"]').type(Cypress.env('userEmail'));
+  cy.get('input[type="email"]').type(Cypress.env('userUs1Email'));
 
-  cy.wait(250);
+  cy.wait(1000);
 
   cy.get('input[type="password"]').type(Cypress.env('userPass'));
 
-  cy.wait(250);
+  cy.wait(1000);
 
   cy.get('button[type="submit"]').click();
 

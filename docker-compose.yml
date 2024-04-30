@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=development
+      - MONGO_URI=mongodb+srv://nawakornc:Nawakorn23480@coworkingcluster.peur8z8.mongodb.net/Coworking?retryWrites=true&w=majority&appName=CoWorkingCluster
+      - JWT_SECRET=asdfghjklxio
+      - JWT_EXPIRE=365d
+      - JWT_COOKIE_EXPIRE=365
+      - AUTH_EMAIL=nawakorn.c@gmail.com
+      - HOST=http://localhost
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjgxZTFhM2E3MzVjNDQ1Zjk4ODQwNyIsImlhdCI6MTcxMDc1OTQ1MCwiZXhwIjoxNzQyMjk1NDUwfQ.TOO_OvsGQ0MloxAN5iqwk-HJuIGK2t6tlr7qW_o-Gx8
+      - MONGO_URI=mongodb+srv://vercel-admin-user:AcrDVDVMpMQsy1la@coworkingcluster.peur8z8.mongodb.net/Coworking?retryWrites=true&w=majority
+      - FRONTEND_URL=http://localhost:3000
+      - BACKEND_URL=http://backend:5000
