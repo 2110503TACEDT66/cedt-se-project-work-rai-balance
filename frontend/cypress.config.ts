@@ -9,6 +9,7 @@ export default defineConfig({
   },
   env: {
     userUs1Email: "cypress2@gmail.com",
+    userUs12Email: "cypress3@gmail.com",
     userEmail: "cypress@gmail.com",
     userPass: "123456",
     adminEmail: "admin@gmail.com",

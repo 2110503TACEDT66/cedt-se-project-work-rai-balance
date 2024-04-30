@@ -17,10 +17,25 @@ beforeEach(() => {
 });
 
 describe('US1_3 Admin can ban user whose point is 0', () => {
-  it('Test admin ban', () => {
-    /* ==== Generated with Cypress Studio ==== */
+  it('TC-1 : Admin ban user whose point is 0', () => {
     cy.get('.h-\\[40\\%\\]').click();
+    cy.wait(1000);
     cy.get('[href="/allusers"]').click();
-    /* ==== End Cypress Studio ==== */
+    cy.wait(1000);
+    cy.get('a > .block').click();
+    cy.wait(1000);
+    cy.contains('Ban').should('exist');
+  })
+
+  it('TC-2 : Admin can ban user whose point is negative', () => {
+    cy.get('.h-\\[40\\%\\]').click();
+    cy.wait(1000);
+    cy.get('[href="/allusers"]').click();
+  })
+
+  it('TC-2 : Admin can not ban user whose point is positive', () => {
+    cy.get('.h-\\[40\\%\\]').click();
+    cy.wait(1000);
+    cy.get('[href="/allusers"]').click();
   })
 })
