@@ -378,7 +378,7 @@ exports.getReviews = async (req, res, next) => {
 };
 
 //desc    GET reviews by coworkingId
-//route   GET /api/project/coworkings/:coworkingId/reviews
+//route   GET /api/project/coworkings/:coworkingId/reviews/all
 //access  Private
 exports.getReviewsByCoworking = async (req, res, next) => {
   try {
