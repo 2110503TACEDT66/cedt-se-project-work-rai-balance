@@ -225,15 +225,15 @@ exports.updateReservation = async (req, res, next) => {
     }
 
     const now = new Date().toISOString();
-    const endReservation =
-      reservation.apptDate.toISOString().split("T")[0] +
-      "T" +
-      reservation.end +
-      ".000Z";
-    if (endReservation <= now) {
+    const startReservationBangkok = new Date(reservation.apptDate.toISOString().split("T")[0] + "T" + reservation.start + ".000Z");
+    const startReservationUTC7 = new Date(startReservationBangkok.getTime() - 7 * 60 * 60 * 1000);
+    const startReservationUTC7ISO = startReservationUTC7.toISOString();
+    // console.log("Start: " + startReservationUTC7ISO);
+
+    if (startReservationUTC7ISO < now) {
       return res.status(401).json({
         success: false,
-        message: "Cannot update an already due reservation",
+        message: "Cannot update reservation that has already started",
       });
     }
 
@@ -305,16 +305,15 @@ exports.deleteReservation = async (req, res, next) => {
     }
 
     const now = new Date().toISOString();
-    // console.log('Time: ' + now);
-    const endReservation =
-      reservation.apptDate.toISOString().split("T")[0] +
-      "T" +
-      reservation.end +
-      ".000Z";
-    if (endReservation <= now) {
+    const startReservationBangkok = new Date(reservation.apptDate.toISOString().split("T")[0] + "T" + reservation.start + ".000Z");
+    const startReservationUTC7 = new Date(startReservationBangkok.getTime() - 7 * 60 * 60 * 1000);
+    const startReservationUTC7ISO = startReservationUTC7.toISOString();
+    // console.log("Start: " + startReservationUTC7ISO);
+
+    if (startReservationUTC7ISO < now) {
       return res.status(401).json({
         success: false,
-        message: "Cannot delete an already due reservation",
+        message: "Cannot delete reservation that has already started",
       });
     }
 
