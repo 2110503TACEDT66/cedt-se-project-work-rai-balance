@@ -30,13 +30,22 @@ export default function Review() {
     const [hasReviewed, setHasReviewed] = useState(false)
 
     const review = async () => {
-        if (rid && user && rating!==0 && comment.trim()) {
+        if (rating === 0 && !comment.trim()) {
+            alert('Please rate this co-working space and write the comment')
+            }
+        else if (rating === 0) {
+            alert('Please rate this co-working')
+        }else if (!comment.trim()) {
+            alert('Please write the comment')
+        }
+        else if (rid && user && rating!==0 && comment.trim()) {
             // console.log(user.name);
             const item:ReviewItem = {
                 reservationId: rid,
                 rating: rating,
                 comment: comment
             }
+        
             console.log(item)
 
             const creatingReview = await postReview(session.user.token, item);
